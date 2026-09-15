@@ -11,15 +11,23 @@
   },
   "dependencies": {
     "@alpinejs/collapse": "3.12.3",
+    "@astrojs/markdoc": "^2.0.9",
+    "@astrojs/react": "^6.0.5",
     "@astrojs/tailwind": "4.0.0",
     "@fontsource/inter": "5.0.8",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
     "@types/alpinejs": "3.7.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "alpinejs": "3.12.3",
-    "astro": "2.10.13",
+    "astro": "^7.3.2",
     "astro-compress": "2.0.14",
     "prettier": "3.0.2",
     "prettier-plugin-astro": "0.12.0",
     "prettier-plugin-tailwindcss": "0.5.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "tailwindcss": "3.3.3"
   }
 }
