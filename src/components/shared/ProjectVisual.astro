@@ -1,0 +1,61 @@
+---
+interface Props { variant: string; }
+const { variant } = Astro.props;
+---
+<div class:list={['project-visual', variant]} aria-hidden="true">
+{variant === "commerce" && <> 
+          <div class="mock-browser">
+            <div class="browser-bar">
+              <span>● ● ●</span><span>alma — objetos con intención</span><span>↗</span>
+            </div><div class="store-nav">
+              <b>alma.</b><span>Objetos &nbsp; Colección &nbsp; Nosotros</span><span
+                >Bolsa (0)</span>
+            </div><div class="store-body">
+              <div>
+                <small>MENOS, PERO MEJOR.</small><div class="mock-title">Espacio para<br />lo esencial.</div><span
+                  class="mock-link">Descubre la colección ↗</span>
+              </div><div class="vase-scene">
+                <div class="vase"></div><div class="vase vase-small"></div><div class="vase-shadow">
+                </div>
+              </div>
+            </div><div class="store-foot">
+              <span>Diseño para todos los días.</span><span>01 — 03</span>
+            </div>
+          </div>
+         </>}
+{variant === "dashboard" && <> 
+          <div class="mock-app">
+            <aside>
+              <b>nexo<span>●</span></b><span class="app-active">◫ &nbsp; Resumen</span><span
+                >▤ &nbsp; Proyectos</span
+              ><span>◷ &nbsp; Actividad</span><span>⚙ &nbsp; Ajustes</span><small
+                >Tu trabajo, en orden.</small>
+            </aside><div class="app-main">
+              <div class="app-top"><span>Mi espacio de trabajo</span><i>M</i></div><div class="mock-title">
+                Todo bajo control.
+              </div><p>Un buen día para avanzar.</p><div class="app-stats">
+                <div><small>Proyectos activos</small><strong>12 <em>↗</em></strong></div><div>
+                  <small>Tareas completadas</small><strong>84 <em>+16%</em></strong>
+                </div>
+              </div><div class="app-chart">
+                <div><b>Actividad semanal</b><span>Esta semana⌄</span></div><div class="bars">
+                  {
+                    [35, 58, 45, 77, 62, 89, 72].map((height, i) => (
+                      <div>
+                        <>
+                          <i style={`height:${height}%`} />
+                          <span>{['L', 'M', 'M', 'J', 'V', 'S', 'D'][i]}</span>
+                        </>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+         </>}
+{variant === 'mobile-concept' && <>
+ <div class="phone-mock"><div class="phone-notch"></div><small>MIÉRCOLES · TU ESPACIO</small><div class="mock-title">A tu ritmo.</div><div class="phone-ring">3/4</div><div class="phone-task">Un momento para ti <span>✓</span></div><div class="phone-task">Muévete un poco <span>✓</span></div><div class="phone-task">Tiempo para leer <span>○</span></div><div class="phone-nav"><span>⌂</span><span>◎</span><span>☰</span></div></div><div class="phone-caption"><small>RITMO / APP CONCEPTUAL</small>Lo pequeño<br />también<br />cuenta.</div>
+ </>}
+{variant === 'editorial-concept' && <div class="editorial-mock"><header><b>raíz.</b><span>Ideas &nbsp; Vida &nbsp; Espacios</span></header><div class="mock-title">Ideas para vivir<br />más despacio.</div><div class="editorial-grid"><div><div class="editorial-landscape"></div><span>ESPACIOS / Un lugar para reconectar.</span></div><div><div class="editorial-landscape second"></div><span>VIDA / Volver a lo esencial.</span></div></div></div>}
+</div>

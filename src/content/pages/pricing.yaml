@@ -1,0 +1,62 @@
+seoTitle: Servicios y presupuestos — Mizradev
+seoDescription: Encuentra el punto de partida para tu web, sistema o aplicación. Alcance y presupuesto definidos según tu proyecto.
+heading: Tu proyecto, a tu manera.
+intro: Cada idea tiene necesidades distintas. Definimos juntos el alcance, los tiempos y el presupuesto antes de empezar.
+plans:
+  - name: Tu presencia digital
+    description: Para presentar tu negocio con una web clara, cuidada y fácil de usar.
+    price: A cotizar
+    periodicity: ''
+    isFlagged: false
+    action: Hablemos de tu web
+    href: /contact?servicio=Sitios%20%26%20p%C3%A1ginas%20web
+    features:
+      - Diseño adaptado a tu marca
+      - Experiencia móvil y escritorio
+      - Estructura y SEO técnico
+      - Orientación para gestionar tu sitio
+  - name: Tu siguiente gran idea
+    description: Para resolver un reto de tu negocio con un sistema o una aplicación propia.
+    price: A tu medida
+    periodicity: ''
+    isFlagged: true
+    action: Dar forma a mi idea
+    href: /contact
+    features:
+      - Definición de alcance y prioridades
+      - Interfaces pensadas para tus usuarios
+      - Desarrollo e integraciones
+      - Pruebas antes del lanzamiento
+  - name: Evoluciona tu web
+    description: Para mejorar lo que ya tienes y preparar tu proyecto para su siguiente etapa.
+    price: Según alcance
+    periodicity: ''
+    isFlagged: false
+    action: Revisemos mi proyecto
+    href: /contact?servicio=Estrategia%20web%20%26%20SEO
+    features:
+      - Revisión de la experiencia actual
+      - Mejoras de velocidad y usabilidad
+      - Optimización técnica SEO
+      - Nuevas funcionalidades
+faq:
+  heading: Buenas preguntas. Respuestas claras.
+  items:
+    - title: ¿Qué necesitas para empezar?
+      answer: Cuéntame qué hace tu negocio, qué quieres lograr y si ya tienes una web. Si cuentas con textos, imágenes o una identidad visual, también nos servirán para definir el punto de partida.
+    - title: ¿Cuánto cuesta un proyecto?
+      answer: Depende del alcance, las funciones y los contenidos. Primero revisamos tu idea y después preparo una propuesta con entregables y presupuesto para que puedas decidir con claridad.
+    - title: ¿Cuánto tiempo tomará?
+      answer: Lo definimos al conocer el alcance y la disponibilidad de contenidos. Acordamos las etapas, las revisiones y una fecha de entrega antes de comenzar.
+    - title: ¿Con quién voy a trabajar?
+      answer: Directamente conmigo. Soy desarrollador freelance y estaré en contacto contigo para revisar la propuesta, compartir avances y resolver dudas durante el proyecto.
+    - title: ¿Puedo mejorar una web que ya existe?
+      answer: Sí. Podemos revisar su diseño, rendimiento y estructura para decidir qué conviene conservar, mejorar o reconstruir según tus objetivos.
+    - title: ¿Qué pasa después del lanzamiento?
+      answer: Te orientaré para gestionar tu proyecto. Si necesitas mantenimiento o nuevas funciones, podemos definir juntos el alcance de esa siguiente etapa.
+cta:
+  heading: Hablemos de lo que necesitas.
+  text: No necesitas tener todas las respuestas. Empecemos por tu idea.
+  button:
+    text: Cuéntame tu proyecto
+    href: /contact

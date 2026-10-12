@@ -4,18 +4,13 @@ import Cta from '../components/home/Cta.astro';
 import Expertise from '../components/home/Expertise.astro';
 import Hero from '../components/home/Hero.astro';
 import Services from '../components/home/Services.astro';
-import Testimonials from '../components/home/Testimonials.astro';
+import Projects from '../components/home/Projects.astro';
+import Engagement from '../components/home/Engagement.astro';
 import Layout from '../layouts/Layout.astro';
+import { getSingleton } from '../lib/keystatic';
+const home = await getSingleton('home');
 ---
 
-<Layout
-  description="Stone is a premium Astro theme specially designed for Business, Marketing, SaaS and Startup websites."
-  title="Stone · Premium Astro template"
->
-  <Hero />
-  <Services />
-  <Expertise />
-  <About />
-  <Testimonials />
-  <Cta />
+<Layout description={home.seoDescription} title={home.seoTitle}>
+  <Hero /><Services /><About /><Expertise /><Projects /><Engagement /><Cta />
 </Layout>

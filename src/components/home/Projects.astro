@@ -1,0 +1,9 @@
+---
+import ProjectCard from '../shared/ProjectCard.astro';
+import { projects } from '../../data/projects';
+---
+<section id="proyectos" class="projects-section section"><div class="shell">
+ <div class="section-intro"><span class="eyebrow">IDEAS EN PRÁCTICA</span><h2>Así puede verse<br />tu próximo proyecto.</h2><p>Una muestra de posibilidades. Conceptos de diseño creados para ilustrar lo que podemos construir juntos.</p></div>
+ <div class="projects-grid">{projects.slice(0,2).map(project => <ProjectCard project={project} />)}</div>
+ <div class="projects-bottom"><span>Tu negocio tiene su propia historia. Tu proyecto también debería.</span><a href="/case-studies" class="text-link">Explorar todos los conceptos <span aria-hidden="true">↗</span></a></div>
+</div></section>

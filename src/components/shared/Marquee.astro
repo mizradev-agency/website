@@ -1,0 +1,24 @@
+---
+const specialties = ['Sitios web', 'Sistemas a medida', 'Apps móviles', 'Estrategia SEO'];
+---
+<section class="specialty-marquee" aria-label="Especialidades" data-marquee>
+  <p class="sr-only">Sitios web, sistemas a medida, apps móviles y estrategia SEO.</p>
+  <div class="marquee-window"><div class="marquee-track" aria-hidden="true">{[0,1].map(() => <div class="marquee-group">{specialties.map(item => <><span>{item}</span><i>✳</i></>)}</div>)}</div></div>
+  <button class="marquee-toggle" type="button" aria-label="Pausar sintillo" aria-pressed="false"><span class="pause-icon" aria-hidden="true">Ⅱ</span><span class="play-icon" aria-hidden="true">▷</span></button>
+</section>
+<script>
+  function setupMarquees() {
+    document.querySelectorAll<HTMLElement>('[data-marquee]').forEach(root => {
+      if (root.dataset.ready) return;
+      root.dataset.ready = 'true';
+      const button = root.querySelector<HTMLButtonElement>('button')!;
+      button.addEventListener('click', () => {
+        const paused = root.classList.toggle('is-paused');
+        button.setAttribute('aria-pressed', String(paused));
+        button.setAttribute('aria-label', paused ? 'Reanudar sintillo' : 'Pausar sintillo');
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', setupMarquees);
+  setupMarquees();
+</script>

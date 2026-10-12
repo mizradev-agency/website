@@ -1,0 +1,169 @@
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import Lenis from 'lenis';
+  import 'lenis/dist/lenis.css';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let dispose: (() => void) | undefined;
+  let activeMain: HTMLElement | null = null;
+  let frame = 0;
+
+  function initializeMotion() {
+    const main = document.querySelector('main');
+    if (!main || main === activeMain) return;
+
+    dispose?.();
+    activeMain = main;
+    const media = gsap.matchMedia();
+
+    media.add('(prefers-reduced-motion: no-preference)', () => {
+      // Keep native document scrolling, touch gestures and Astro's scroll restoration.
+      const smoothScroll = new Lenis({
+        lerp: 0.085,
+        smoothWheel: true,
+        syncTouch: false,
+        anchors: false,
+        allowNestedScroll: true,
+        prevent: (element) => Boolean(element.closest('textarea, select, [data-lenis-prevent]')),
+      });
+      const tick = () => smoothScroll.raf(performance.now());
+      smoothScroll.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(tick);
+
+      const candidates = Array.from(
+        main.querySelectorAll<HTMLElement>(
+          'h1, h2, h3, p, img, form, ul, blockquote, [data-reveal], .grid > *, a.rounded-full',
+        ),
+      ).filter((element) => !element.closest('[x-show], .sr-only, [data-scroll-image], [aria-hidden="true"], [data-case-gallery]' ));
+      const candidateSet = new Set(candidates);
+      // Reveal each content block once, without stacking transforms on its children.
+      const targets = candidates.filter((element) => {
+        for (let parent = element.parentElement; parent && parent !== main; parent = parent.parentElement) {
+          if (candidateSet.has(parent)) return false;
+        }
+        return true;
+      });
+      const footer = document.querySelector<HTMLElement>('body > footer > div');
+      if (footer) targets.push(footer);
+
+      const pending = new Set<HTMLElement>();
+      const animations = gsap.context(() => {});
+      const compact = window.matchMedia('(max-width: 767px)').matches;
+      animations.add(() => {
+        main.querySelectorAll<HTMLElement>('[data-scroll-image]').forEach((element) => {
+          gsap.fromTo(element, {
+            y: () => window.innerWidth < 768 ? 10 : 24,
+            rotation: () => window.innerWidth < 768 ? 0 : -0.65,
+            scale: 0.985,
+          }, {
+            y: () => window.innerWidth < 768 ? -10 : -24,
+            rotation: () => window.innerWidth < 768 ? 0 : 0.65,
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: element.parentElement,
+              start: 'clamp(top bottom)',
+              end: 'clamp(bottom top)',
+              scrub: compact ? 0.45 : 0.8,
+              invalidateOnRefresh: true,
+            },
+          });
+        });
+      });
+      const reveal = (elements: HTMLElement[]) => {
+        const fresh = elements.filter((element) => pending.delete(element));
+        if (!fresh.length) return;
+        fresh.forEach((element) => observer.unobserve(element));
+        animations.add(() => {
+          gsap.to(fresh, {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: { each: 0.055, amount: Math.min(0.22, (fresh.length - 1) * 0.055) },
+            ease: 'power2.out',
+            clearProps: 'opacity,transform',
+            overwrite: 'auto',
+          });
+        });
+      };
+      const observer = new IntersectionObserver(
+        (entries) => reveal(entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target as HTMLElement)),
+        { threshold: 0, rootMargin: '0px 0px -24px 0px' },
+      );
+
+      animations.add(() => {
+        targets.forEach((element) => {
+          const bounds = element.getBoundingClientRect();
+          // Keep restored scroll positions and hidden UI intact.
+          if (!bounds.height || bounds.bottom <= 0) return;
+          pending.add(element);
+          gsap.set(element, { opacity: 0, y: 14 });
+          observer.observe(element);
+        });
+      });
+
+      const onFocus = (event: FocusEvent) => {
+        if (!(event.target instanceof HTMLElement)) return;
+        // Cancel wheel inertia when the browser scrolls to a keyboard-focused control.
+        smoothScroll.scrollTo(window.scrollY, { immediate: true });
+        const focused = event.target;
+        reveal([...pending].filter((element) => element.contains(focused)));
+      };
+      document.addEventListener('focusin', onFocus);
+
+      let refreshFrame = 0;
+      let disposed = false;
+      const refresh = () => {
+        cancelAnimationFrame(refreshFrame);
+        refreshFrame = requestAnimationFrame(() => {
+          smoothScroll.resize();
+          ScrollTrigger.refresh();
+        });
+      };
+      const resizeObserver = new ResizeObserver(refresh);
+      resizeObserver.observe(main);
+      const header = document.querySelector('body > header');
+      if (header) resizeObserver.observe(header);
+      document.fonts.ready.then(() => {
+        if (!disposed) refresh();
+      });
+
+      return () => {
+        disposed = true;
+        cancelAnimationFrame(refreshFrame);
+        resizeObserver.disconnect();
+        gsap.ticker.remove(tick);
+        smoothScroll.off('scroll', ScrollTrigger.update);
+        smoothScroll.destroy();
+        observer.disconnect();
+        document.removeEventListener('focusin', onFocus);
+        animations.revert();
+        pending.clear();
+      };
+    });
+
+    dispose = () => {
+      media.revert();
+      activeMain = null;
+    };
+  }
+
+  function scheduleMotion() {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(initializeMotion);
+  }
+
+  document.addEventListener('astro:page-load', scheduleMotion);
+  document.addEventListener('astro:before-swap', () => {
+    cancelAnimationFrame(frame);
+    dispose?.();
+    dispose = undefined;
+  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scheduleMotion, { once: true });
+  } else {
+    scheduleMotion();
+  }
+</script>

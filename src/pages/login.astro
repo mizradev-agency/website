@@ -1,0 +1,155 @@
+---
+export const prerender = false;
+
+import AuthLayout from '../layouts/AuthLayout.astro';
+import {
+  LOGIN_ERROR_MESSAGE,
+  authenticate,
+  createCsrfToken,
+  getAuthConfig,
+  getClientKey,
+  getSession,
+  isAuthConfigured,
+  isRateLimited,
+  isSafeAdminRedirect,
+  isSameOrigin,
+  registerLoginFailure,
+  registerLoginSuccess,
+  setCsrfCookie,
+  setSessionCookie,
+  verifyCsrf,
+} from '../lib/auth';
+
+if (getSession(Astro)) {
+  return Astro.redirect(isSafeAdminRedirect(Astro.url.searchParams.get('next')));
+}
+
+const totpEnabled = getAuthConfig().totpEnabled;
+const configured = isAuthConfigured();
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const clientKey = getClientKey(
+    Astro.request,
+    (() => {
+      try {
+        return Astro.clientAddress;
+      } catch {
+        return 'unknown';
+      }
+    })(),
+  );
+  const form = await Astro.request.formData();
+  const username = String(form.get('username') ?? '');
+  const password = String(form.get('password') ?? '');
+  const totp = String(form.get('totp') ?? '');
+  const csrf = String(form.get('_csrf') ?? '');
+  const next = isSafeAdminRedirect(String(form.get('next') || Astro.url.searchParams.get('next') || ''));
+
+  if (!configured) {
+    error = 'El acceso al CMS no está configurado en el servidor.';
+  } else if (!isSameOrigin(Astro.request, Astro.url) || !verifyCsrf(Astro, csrf)) {
+    error = LOGIN_ERROR_MESSAGE;
+  } else if (isRateLimited(clientKey)) {
+    error = LOGIN_ERROR_MESSAGE;
+  } else if (await authenticate(username, password, totp)) {
+    registerLoginSuccess(clientKey);
+    setSessionCookie(Astro, username);
+    return Astro.redirect(next);
+  } else {
+    registerLoginFailure(clientKey);
+    error = LOGIN_ERROR_MESSAGE;
+  }
+}
+
+const csrfToken = createCsrfToken();
+setCsrfCookie(Astro, csrfToken);
+
+const nextValue = isSafeAdminRedirect(Astro.url.searchParams.get('next'));
+---
+
+<AuthLayout title="Acceso al CMS · Stone">
+  <section class="flex min-h-screen items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md rounded-3xl bg-white p-8 shadow-sm">
+      <h1 class="text-3xl font-medium tracking-tight">Acceso al CMS</h1>
+      <p class="text-primary-950/70 mt-3 text-base">
+        Inicia sesión para editar el contenido en Keystatic.
+      </p>
+
+      {
+        error && (
+          <p class="mt-6 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+            {error}
+          </p>
+        )
+      }
+
+      {
+        !configured && (
+          <p class="mt-6 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            Define ADMIN_USERNAME, ADMIN_PASSWORD_HASH y SESSION_SECRET en tu archivo .env.
+          </p>
+        )
+      }
+
+      <form method="POST" class="mt-8 flex flex-col gap-y-5" autocomplete="on">
+        <input type="hidden" name="_csrf" value={csrfToken} />
+        <input type="hidden" name="next" value={nextValue} />
+
+        <div>
+          <label for="username" class="mb-2 block text-sm font-medium">Usuario</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            autocomplete="username"
+            required
+            maxlength="64"
+            class="hover:ring-primary-600 focus:ring-primary-600 bg-primary-50 ring-primary-900/40 placeholder:text-primary-950/60 block w-full appearance-none rounded-md border-0 px-4 py-4 text-base ring-1 transition focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        <div>
+          <label for="password" class="mb-2 block text-sm font-medium">Contraseña</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            autocomplete="current-password"
+            required
+            maxlength="128"
+            class="hover:ring-primary-600 focus:ring-primary-600 bg-primary-50 ring-primary-900/40 placeholder:text-primary-950/60 block w-full appearance-none rounded-md border-0 px-4 py-4 text-base ring-1 transition focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        {
+          totpEnabled && (
+            <div>
+              <label for="totp" class="mb-2 block text-sm font-medium">
+                Código 2FA
+              </label>
+              <input
+                type="text"
+                name="totp"
+                id="totp"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                pattern="[0-9]{6}"
+                maxlength="6"
+                required
+                class="hover:ring-primary-600 focus:ring-primary-600 bg-primary-50 ring-primary-900/40 placeholder:text-primary-950/60 block w-full appearance-none rounded-md border-0 px-4 py-4 text-base ring-1 transition focus:outline-none focus:ring-2"
+              />
+            </div>
+          )
+        }
+
+        <button
+          class="bg-primary-600 hover:bg-primary-700 focus-visible:outline-primary-600 inline-flex items-center justify-center rounded-full border border-transparent px-5 py-3 text-base font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          type="submit"
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
+  </section>
+</AuthLayout>

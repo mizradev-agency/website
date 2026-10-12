@@ -1,0 +1,51 @@
+seoTitle: Mizradev — Desarrollo web freelance, apps y SEO
+seoDescription: Transformo ideas en sitios web, sistemas a medida y aplicaciones móviles. Desarrollo freelance con diseño cuidado y estrategia SEO.
+hero:
+  heading: Transformo tu idea en una experiencia digital que conecta.
+  text: Soy desarrollador freelance. Combino diseño, código y estrategia para crear sitios web, sistemas y apps que le dan impulso a tu negocio.
+  cta:
+    text: Hablemos de tu proyecto
+    href: /contact
+  image: /assets/hero/image.webp
+  imageAlt: Un espacio tranquilo para dar forma a nuevas ideas, con escritorio, portátil y plantas.
+services:
+  heading: Todo lo que necesitas para dar el siguiente paso.
+  items:
+    - step: '01'
+      name: Sitios & páginas web
+      description: Tu negocio, bien presentado. Sitios corporativos, landing pages y tiendas con una experiencia clara, rápida y fácil de administrar.
+    - step: '02'
+      name: Sistemas a medida
+      description: Menos tareas repetitivas, más posibilidades. Plataformas, paneles e integraciones diseñados alrededor de cómo funciona tu negocio.
+    - step: '03'
+      name: Aplicaciones móviles
+      description: Tu idea, al alcance de la mano. Apps intuitivas que conectan tu servicio con las personas, donde sea que estén.
+    - step: '04'
+      name: Estrategia web & SEO
+      description: Una buena web también necesita ser encontrada. Estructura, contenido y optimización técnica con una dirección clara para crecer.
+expertise:
+  heading: Un proceso claro. De principio a fin.
+  items:
+    - name: Primero, entender
+      description: Hablamos de tu idea, tus usuarios y lo que necesitas resolver. Definimos el alcance y las prioridades desde el inicio.
+    - name: Darle forma
+      description: Convierto los objetivos en una propuesta visual y un recorrido fácil de usar. Revisamos juntos antes de construir.
+    - name: Construir y probar
+      description: Desarrollo cada pieza, comparto avances y pruebo la experiencia en diferentes pantallas.
+    - name: Lanzar y evolucionar
+      description: Preparamos la salida, te enseño a gestionar tu proyecto y definimos los siguientes pasos para seguir mejorándolo.
+about:
+  heading: Una persona. Toda la atención en tu proyecto.
+  text: Soy Mizradev, desarrollador web freelance. Me gusta convertir problemas complejos en experiencias simples. Trabajar conmigo significa hablar directamente con quien diseña y construye tu proyecto, con comunicación cercana y atención a cada detalle.
+  cta:
+    text: Cuéntame qué tienes en mente
+    href: /contact
+testimonials:
+  heading: Ideas en práctica
+  items: []
+cta:
+  heading: Las buenas ideas empiezan con una conversación.
+  text: Ya sea una nueva web, una herramienta para tu negocio o esa app que tienes en mente. Vamos a darle forma.
+  button:
+    text: Empecemos tu proyecto
+    href: /contact

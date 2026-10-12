@@ -1,0 +1,8 @@
+seoTitle: Not found · Stone
+seoDescription: Page not found. Please check the URL in the address bar and try again.
+code: '404'
+heading: Page not found
+text: Please check the URL in the address bar and try again.
+cta:
+  text: Go back home
+  href: /

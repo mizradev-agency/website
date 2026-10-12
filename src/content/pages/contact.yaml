@@ -1,0 +1,18 @@
+seoTitle: Hablemos de tu proyecto — Mizradev
+seoDescription: Cuéntame tu idea para una web, sistema a medida, aplicación móvil o estrategia SEO.
+info:
+  addressLabel: Modalidad
+  addressLines:
+    - Desarrollo freelance
+    - Colaboración remota
+  phoneLabel: Teléfono
+  phone: ''
+  emailLabel: Correo
+  email: ''
+form:
+  heading: Hagamos que tu idea suceda.
+  text: Una web que represente tu negocio, un sistema que simplifique tu día o una app que conecte con tus usuarios. Todo empieza con una conversación.
+  namePlaceholder: ¿Cómo te llamas?
+  emailPlaceholder: tu@correo.com
+  messagePlaceholder: ¿Qué te gustaría construir? Cuéntame tus objetivos y en qué etapa está tu proyecto.
+  submitLabel: Preparar mensaje

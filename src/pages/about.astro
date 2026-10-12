@@ -1,17 +1,20 @@
 ---
-import Heading from '../components/about/Heading.astro';
-import Mission from '../components/about/Mission.astro';
-import Team from '../components/about/Team.astro';
-import Values from '../components/about/Values.astro';
 import Layout from '../layouts/Layout.astro';
+import PageIntro from '../components/shared/PageIntro.astro';
+import About from '../components/home/About.astro';
+import Expertise from '../components/home/Expertise.astro';
+import Cta from '../components/home/Cta.astro';
+const values = [
+  { title: 'Trato directo', text: 'Hablas con la persona que diseña y desarrolla tu proyecto. Tus preguntas e ideas llegan directamente a quien las convierte en una solución.' },
+  { title: 'Claridad en cada paso', text: 'Definimos prioridades, revisamos avances y tomamos decisiones juntos. Siempre tendrás contexto para entender qué estamos construyendo.' },
+  { title: 'Diseño con propósito', text: 'Cada pantalla tiene una razón de ser. Busco que tu proyecto se sienta bien, sea fácil de usar y responda a una necesidad de tu negocio.' },
+];
 ---
-
-<Layout
-  description="Find more our history, values, mission and more. We are a group of people who share the same values."
-  title="About · Stone"
->
-  <Heading />
-  <Mission />
-  <Values />
-  <Team />
+<Layout title="Sobre mí — Desarrollo independiente | Mizradev" description="Conoce mi forma de trabajar: comunicación directa, diseño con propósito y desarrollo freelance atento a cada detalle.">
+  <PageIntro eyebrow="Sobre mí" title="Detrás de cada gran idea, una conexión humana." text="Soy Mizradev, desarrollador freelance. Combino diseño, código y estrategia para convertir retos de negocio en experiencias digitales simples y cuidadas." action="Conozcamos tu idea" />
+  <div class="shell about-banner"><img src="/assets/hero/image.webp" width="1280" height="640" alt="Espacio de trabajo con un portátil, plantas y luz natural" /><div class="about-banner-note"><span class="eyebrow">MI FORMA DE TRABAJAR</span><p>Cerca de tu idea.<br />Atento a cada detalle.</p><span aria-hidden="true">✳</span></div></div>
+  <About />
+  <section class="values-section section"><div class="shell"><div class="section-intro"><span class="eyebrow">LO QUE GUÍA MI TRABAJO</span><h2>Buenas soluciones.<br />Principios claros.</h2><p>La experiencia de trabajar juntos importa tanto como el resultado final.</p></div><div class="values-grid">{values.map((value, i) => <article class="value-card" data-reveal><span class="eyebrow">0{i+1}</span><h3>{value.title}</h3><p>{value.text}</p></article>)}</div></div></section>
+  <section class="shell section personal-note"><span class="eyebrow">DESARROLLO INDEPENDIENTE</span><h2>Tu proyecto no necesita ser enorme para merecer toda mi atención.</h2><div><p>Me interesa entender cómo funciona tu negocio, qué necesitan tus usuarios y dónde puede ayudar la tecnología. A partir de ahí, damos forma a una solución que tenga sentido para ti.</p><a class="text-link" href="/services">Explora mis servicios <span aria-hidden="true">↗</span></a></div></section>
+  <Expertise /><Cta />
 </Layout>

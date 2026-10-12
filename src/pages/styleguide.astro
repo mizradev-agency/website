@@ -1,125 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
 const colors = [
-  {
-    name: 'white',
-    hex: '#ffffff',
-  },
-  {
-    name: '50',
-    hex: '#fafaf9',
-  },
-  {
-    name: '100',
-    hex: '#f5f5f4',
-  },
-  {
-    name: '200',
-    hex: '#e7e5e4',
-  },
-  {
-    name: '300',
-    hex: '#d6d3d1',
-  },
-  {
-    name: '400',
-    hex: '#a8a29e',
-  },
-  {
-    name: '500',
-    hex: '#78716c',
-  },
-  {
-    name: '600',
-    hex: '#57534e',
-  },
-  {
-    name: '700',
-    hex: '#44403c',
-  },
-  {
-    name: '800',
-    hex: '#292524',
-  },
-  {
-    name: '900',
-    hex: '#1c1917',
-  },
-  {
-    name: '950',
-    hex: '#0c0a09',
-  },
+  { name: 'Tinta', hex: '#0d2920', use: 'Texto y botones principales' },
+  { name: 'Bosque', hex: '#225543', use: 'Bloques de marca y detalles' },
+  { name: 'Menta', hex: '#79efb4', use: 'Llamadas a la acción' },
+  { name: 'Papel', hex: '#f7f9f6', use: 'Fondo principal' },
+  { name: 'Lavanda', hex: '#d9cef2', use: 'Sistemas y experiencias digitales' },
+  { name: 'Durazno', hex: '#f4c7aa', use: 'Proyectos y estrategia' },
 ];
 ---
-
-<Layout description="Style guide for Stone premium Astro theme" title="Styleguide · Stone">
-  <header class="py-16 lg:py-20">
-    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:max-w-7xl lg:px-8">
-      <h1 class="text-4xl font-medium tracking-tight sm:text-5xl lg:text-6xl">Styleguide</h1>
-    </div>
-  </header>
-
-  <section class="py-16 sm:py-20">
-    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="flex flex-col gap-16">
-        <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">Colors</h2>
-        <div class="grid grid-cols-2 gap-12 sm:grid-cols-6">
-          {
-            colors.map((color) => (
-              <div class="relative flex">
-                <div class="flex flex-col gap-2">
-                  <div
-                    class="border-primary-900/10 dark:border-primary-300/10 h-16 w-16 rounded-md border"
-                    style={`background-color: ${color.hex}`}
-                  />
-                  <div class="text-sm font-medium">{color.name}</div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-16 sm:py-20">
-    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="flex flex-col gap-16">
-        <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">Typography</h2>
-        <div class="flex flex-col gap-16 sm:flex-row">
-          <div class="flex flex-col gap-8">
-            <div
-              class="bg-primary-500/10 dark:bg-primary-400/10 flex w-64 flex-col items-center gap-3 rounded-md p-6"
-            >
-              <p class="text-5xl">Aa</p>
-              <p class="text-primary-950/70 dark:text-primary-200/70 text-base">Inter</p>
-            </div>
-            <div
-              class="bg-primary-500/10 dark:bg-primary-400/10 flex w-64 flex-col items-center gap-3 rounded-md p-6"
-            >
-              <p class="text-5xl font-medium">Aa</p>
-              <p class="text-primary-950/70 dark:text-primary-200/70 text-base">Inter Medium</p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-4">
-            <h1 class="text-4xl font-medium tracking-tight sm:text-5xl lg:text-6xl">Heading 1</h1>
-            <h2 class="text-3xl font-medium tracking-tight sm:text-4xl">Heading 2</h2>
-            <h3 class="text-xl font-medium sm:text-2xl">Heading 3</h3>
-            <p class="text-lg sm:text-xl">Subtitle</p>
-            <p class="text-base font-medium">Bold text</p>
-            <p class="text-base">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis
-              suscipit eaque, iste dolor cupiditate blanditiis ratione. Lorem ipsum, dolor sit amet
-              consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor
-              cupiditate blanditiis ratione. Lorem ipsum, dolor sit amet consectetur adipisicing
-              elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis
-              ratione. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit
-              perferendis suscipit eaque, iste dolor cupiditate.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<Layout title="Paleta y estilo — Mizradev" description="La identidad visual de Mizradev: verdes, lavanda y durazno, con tipografía Manrope.">
+<section class="shell section"><span class="eyebrow">IDENTIDAD MIZRADEV</span><h1>Una paleta con nuevas posibilidades.</h1><p>El verde conserva la esencia. La lavanda y el durazno aportan contraste suave y calidez.</p><div class="palette">{colors.map(color => <article><div class="swatch" style={`background:${color.hex}`}></div><h2>{color.name}</h2><code>{color.hex}</code><p>{color.use}</p></article>)}</div><div class="type-sample"><span class="eyebrow">TIPOGRAFÍA · MANROPE</span><h2>Diseño con intención.<br />Código con propósito.</h2><p>Textos claros, títulos amplios y una experiencia fácil de recorrer.</p><a class="button button-dark" href="/contact">Hablemos de tu proyecto <span aria-hidden="true">↗</span></a></div></section>
 </Layout>
+<style>
+h1 {font-size:clamp(42px,5vw,72px);line-height:1.06;letter-spacing:-.06em;max-width:850px;margin:25px 0} p {font-size:15px;line-height:1.8;color:var(--muted)} .palette {display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px} .swatch {height:180px;border-radius:20px;border:1px solid var(--line)} .palette h2 {font-size:25px;letter-spacing:-1px;margin:20px 0 10px} code {font-size:13px} .type-sample {margin-top:80px} .type-sample h2 {margin:25px 0} .type-sample .button {margin-top:20px} @media(max-width:600px){.palette{grid-template-columns:1fr 1fr;gap:25px 16px}.swatch{height:125px}}
+</style>

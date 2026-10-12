@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+
+import AuthLayout from '../layouts/AuthLayout.astro';
+import { CSRF_COOKIE, clearAuthCookies, createCsrfToken, getSession, isSameOrigin, setCsrfCookie, verifyCsrf } from '../lib/auth';
+
+if (Astro.request.method === 'POST') {
+  const csrf = String((await Astro.request.formData()).get('_csrf') ?? '');
+  if (isSameOrigin(Astro.request, Astro.url) && verifyCsrf(Astro, csrf)) {
+    clearAuthCookies(Astro);
+    return Astro.redirect('/login');
+  }
+}
+
+if (!getSession(Astro)) {
+  return Astro.redirect('/login');
+}
+
+const csrfToken = Astro.cookies.get(CSRF_COOKIE)?.value || createCsrfToken();
+setCsrfCookie(Astro, csrfToken);
+---
+
+<AuthLayout title="Cerrar sesión · Stone">
+  <section class="flex min-h-screen items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md rounded-3xl bg-white p-8 shadow-sm">
+      <h1 class="text-3xl font-medium tracking-tight">Cerrar sesión</h1>
+      <p class="text-primary-950/70 mt-3 text-base">
+        Esto termina tu sesión del CMS. Keystatic quedará bloqueado hasta que vuelvas a entrar.
+      </p>
+      <form method="POST" class="mt-8">
+        <input type="hidden" name="_csrf" value={csrfToken} />
+        <button
+          class="bg-primary-600 hover:bg-primary-700 focus-visible:outline-primary-600 inline-flex items-center justify-center rounded-full border border-transparent px-5 py-3 text-base font-medium text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          type="submit"
+        >
+          Cerrar sesión
+        </button>
+      </form>
+    </div>
+  </section>
+</AuthLayout>

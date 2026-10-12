@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageIntro from '../../components/shared/PageIntro.astro';
+import ProjectVisual from '../../components/shared/ProjectVisual.astro';
+import Cta from '../../components/home/Cta.astro';
+import { projects } from '../../data/projects';
+export const prerender = true;
+export function getStaticPaths() { return projects.map(project => ({params:{slug:project.slug}, props:{project}})); }
+const { project } = Astro.props;
+const next = projects[(projects.findIndex(item => item.slug === project.slug) + 1) % projects.length];
+---
+<Layout title={`${project.name} — ${project.title} | Mizradev`} description={project.summary}>
+ <PageIntro eyebrow={`Concepto / ${project.name}`} title={project.title} text={project.summary} action="Todos los conceptos" href="/case-studies" />
+ <div class="shell case-hero-visual"><ProjectVisual variant={project.visual} /></div>
+ <section class="shell section case-overview"><dl class="case-meta"><div><dt>PROYECTO</dt><dd>{project.name}</dd></div><div><dt>DISCIPLINA</dt><dd>{project.discipline}</dd></div><div><dt>TIPO DE TRABAJO</dt><dd>Concepto de diseño</dd></div></dl><div class="case-narrative"><div><span class="eyebrow">01 / EL PUNTO DE PARTIDA</span><h2>Un reto concreto.</h2><p>{project.challenge}</p></div><div><span class="eyebrow">02 / LA PROPUESTA</span><h2>Diseñar con intención.</h2><p>{project.approach}</p><ul>{project.scope.map(item => <li>{item}</li>)}</ul></div><div><span class="eyebrow">03 / LO QUE EXPLORA</span><h2>Una posibilidad tangible.</h2><p>{project.outcome}</p></div></div></section>
+ <div class="shell next-project"><a href={`/case-studies/${next.slug}`} class="text-link">Siguiente concepto: {next.name} <span aria-hidden="true">↗</span></a></div><Cta />
+</Layout>

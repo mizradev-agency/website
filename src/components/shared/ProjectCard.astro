@@ -1,0 +1,13 @@
+---
+import ProjectVisual from './ProjectVisual.astro';
+import type { projects } from '../../data/projects';
+interface Props { project: (typeof projects)[number]; }
+const { project } = Astro.props;
+---
+<article class="project-card" data-category={project.category}>
+ <a class="case-link" href={`/case-studies/${project.slug}`}>
+  <ProjectVisual variant={project.visual} />
+  <div class="project-info"><div><span class="eyebrow">CONCEPTO / {project.discipline}</span><h3>{project.name} — {project.title}</h3></div><span aria-hidden="true">↗</span></div>
+  <p>{project.summary}</p>
+ </a>
+</article>

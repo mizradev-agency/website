@@ -1,0 +1,9 @@
+---
+interface Props { eyebrow: string; title: string; text: string; action?: string; href?: string; }
+const { eyebrow, title, text, action = 'Hablemos de tu proyecto', href = '/contact' } = Astro.props;
+---
+<section class="shell page-intro">
+  <div class="page-intro-top"><span class="eyebrow">{eyebrow}</span><a href="/" class="back-home">Mizradev <span aria-hidden="true">/</span> {eyebrow}</a></div>
+  <h1>{title}</h1>
+  <div class="page-intro-bottom"><p>{text}</p><a class="button button-dark" href={href}>{action}<span aria-hidden="true">↗</span></a></div>
+</section>

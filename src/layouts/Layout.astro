@@ -1,9 +1,11 @@
 ---
-import '@fontsource/inter/latin-400.css';
-import '@fontsource/inter/latin-500.css';
+import '../styles/brand.css';
+import '../styles/agenc.css';
+import '../styles/experience.css';
 import { ClientRouter  } from "astro:transitions";
 import Footer from '../components/layout/Footer.astro';
 import Header from '../components/layout/Header.astro';
+import Motion from '../components/layout/Motion.astro';
 
 interface Props {
   description: string;
@@ -14,13 +16,13 @@ const { description, title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" x-cloak x-data :class="{ 'dark': $store.theme.isDark }">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
+    <link rel="preload" href="/fonts/manrope/manrope-400.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/manrope/manrope-500.ttf" as="font" type="font/ttf" crossorigin />
     <meta name="viewport" content="width=device-width" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
@@ -30,11 +32,13 @@ const { description, title } = Astro.props;
   <body
     class="bg-primary-50 text-primary-950 dark:bg-primary-950 dark:text-primary-200 antialiased transition"
   >
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <Header />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <Footer />
+    <Motion />
     <style is:global>
       [x-cloak] {
         display: none !important;

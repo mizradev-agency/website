@@ -1,0 +1,16 @@
+brandName: Mizradev
+logoDark: /assets/mizradev-logo.png
+menuQuote: Desarrollo independiente. Ideas sin límites.
+navLinks:
+  - ref: '01'
+    name: Servicios
+    href: /services
+  - ref: '02'
+    name: Proyectos
+    href: /case-studies
+  - ref: '03'
+    name: Sobre mí
+    href: /about
+footerText: Desarrollo web freelance. Diseño, código y estrategia para llevar tu próxima idea más lejos.
+copyright: © 2026 Mizradev
+footerGroups: []
