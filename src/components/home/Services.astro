@@ -1,24 +1,23 @@
 ---
 import { getSingleton } from '../../lib/keystatic';
 const { services } = await getSingleton('home');
-const icons = ['↗', '⌘', '◫', '◎'];
 ---
 
 <section id="servicios" class="section shell">
   <div class="section-intro">
-    <span class="eyebrow">LO QUE HAGO</span><h2>{services.heading}</h2><p>
-      Diseño y desarrollo conectados, con una solución pensada para lo que tu negocio necesita.
+    <span class="eyebrow">{services.eyebrow}</span><h2>{services.heading}</h2><p>
+      {services.text}
     </p>
   </div>
   <div class="service-list">
     {
-      services.items.map((item, i) => (
-        <a class="service-row" href={'/agendar-llamada'}>
+      services.items.map((item) => (
+        <a class="service-row" href={services.cta.href}>
           <div class="service-top">
             <>
               <span class="service-number">{item.step}</span>
               <span class="service-icon" aria-hidden="true">
-                {icons[i]}
+                {item.icon}
               </span>
             </>
           </div>
@@ -26,7 +25,7 @@ const icons = ['↗', '⌘', '◫', '◎'];
           <>
             <h3>{item.name}</h3>
             <span class="service-bottom">
-              Hablemos de tu idea <span aria-hidden="true">↗</span>
+              {services.cta.text} <span aria-hidden="true">↗</span>
             </span>
           </>
         </a>

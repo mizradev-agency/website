@@ -1,0 +1,26 @@
+seoTitle: Proyectos y conceptos digitales — Mizradev
+seoDescription: Explora conceptos de e-commerce, sistemas de gestión, apps móviles y webs editoriales. Diseño pensado para resolver necesidades concretas.
+intro:
+  eyebrow: Proyectos / Case studies
+  title: Ideas que ya puedes imaginar en acción.
+  text: Explora distintas formas de conectar diseño y tecnología. Estos conceptos muestran cómo podría tomar forma tu próxima web, sistema o aplicación.
+  action: Agendar una llamada
+  href: /agendar-llamada
+galleryLabel: Galería de conceptos
+filterLabel: Filtrar proyectos
+allLabel: Todos
+disclaimer: Exploraciones de diseño, no proyectos de clientes. Las marcas y los datos de las interfaces son ilustrativos.
+detail:
+  conceptLabel: Concepto
+  backLabel: Todos los conceptos
+  projectLabel: PROYECTO
+  disciplineLabel: DISCIPLINA
+  typeLabel: TIPO DE TRABAJO
+  typeText: Concepto de diseño
+  challengeEyebrow: 01 / EL PUNTO DE PARTIDA
+  challengeHeading: Un reto concreto.
+  approachEyebrow: 02 / LA PROPUESTA
+  approachHeading: Diseñar con intención.
+  outcomeEyebrow: 03 / LO QUE EXPLORA
+  outcomeHeading: Una posibilidad tangible.
+  nextLabel: 'Siguiente concepto:'

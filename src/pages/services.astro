@@ -6,62 +6,33 @@ import Expertise from '../components/home/Expertise.astro';
 import Cta from '../components/home/Cta.astro';
 import { getSingleton } from '../lib/keystatic';
 const { services } = await getSingleton('home');
-const deliverables = [
-  [
-    'Sitios corporativos y landing pages',
-    'Tiendas online y catálogos',
-    'Contenido administrable y diseño responsive',
-  ],
-  [
-    'Paneles de gestión y herramientas internas',
-    'Automatización de tareas',
-    'Integraciones entre tus servicios',
-  ],
-  [
-    'Diseño de interfaces móviles',
-    'Flujos claros para tus usuarios',
-    'Desarrollo según las necesidades del producto',
-  ],
-  [
-    'Revisión de estructura y contenidos',
-    'Rendimiento y SEO técnico',
-    'Un plan de mejoras con prioridades claras',
-  ],
-];
+const content = await getSingleton('services');
 ---
 
-<Layout
-  title="Servicios — Diseño y desarrollo freelance | Mizradev"
-  description="Sitios web, sistemas a medida, apps móviles y SEO. Diseño y desarrollo conectados para resolver lo que tu negocio necesita."
->
-  <PageIntro
-    eyebrow="Servicios"
-    title="Diseño, código y un siguiente paso para tu negocio."
-    text="Desde tu primera web hasta una herramienta que simplifique tu operación. Una colaboración directa para convertir lo que necesitas en algo que puedas usar."
-  />
+<Layout title={content.seoTitle} description={content.seoDescription}>
+  <PageIntro {...content.intro} />
   <Services />
   <section class="shell section service-deliverables">
     <div class="section-intro">
-      <span class="eyebrow">DEL OBJETIVO A LA SOLUCIÓN</span><h2>
-        Lo que podemos construir juntos.
+      <span class="eyebrow">{content.deliverables.eyebrow}</span><h2>
+        {content.deliverables.heading}
       </h2><p>
-        Elegimos las herramientas después de entender el problema. Cada propuesta se adapta a tu
-        alcance.
+        {content.deliverables.text}
       </p>
     </div>
     {
-      services.items.map((service, i) => (
+      services.items.map((service) => (
         <article class="deliverable-row">
           <h3>{service.name}</h3>
           <ul>
-            {deliverables[i].map((item) => (
+            {service.deliverables.map((item) => (
               <li>{item}</li>
             ))}
           </ul>
           <>
             <span class="eyebrow">{service.step}</span>
             <a
-              href={'/agendar-llamada'}
+              href={services.cta.href}
               class="round-arrow"
               aria-label={`Consultar sobre ${service.name}`}
             >

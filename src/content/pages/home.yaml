@@ -6,23 +6,65 @@ hero:
   cta:
     text: Agenda una llamada
     href: /agendar-llamada
-  image: /assets/mizradev-trabajando.webp
+  image: /assets/hero/image.png
   imageAlt: Mizradev diseñando y desarrollando un proyecto en su espacio de trabajo.
+  eyebrow: MIZRADEV · DESARROLLO INDEPENDIENTE
+  secondaryCta:
+    text: Prefiero escribirte
+    href: /contact
+  photoIndex: 01 / IDEAS QUE TOMAN FORMA
+  showcaseHeading: |-
+    Diseño con intención.
+    Código con propósito.
+  showcaseText: Tu idea, en buenas manos.
+  showcaseLink:
+    text: Conoce a Mizradev
+    href: '#sobre-mi'
+  cornerLink:
+    text: Descubre lo que podemos crear
+    href: '#servicios'
+  captionLeft: DISEÑO + CÓDIGO + ESTRATEGIA
+  captionRight: De tu idea al mundo digital. ↗
 services:
   heading: Todo lo que necesitas para dar el siguiente paso.
   items:
     - step: '01'
       name: Sitios & páginas web
       description: Tu negocio, bien presentado. Sitios corporativos, landing pages y tiendas con una experiencia clara, rápida y fácil de administrar.
+      icon: ↗
+      deliverables:
+        - Sitios corporativos y landing pages
+        - Tiendas online y catálogos
+        - Contenido administrable y diseño responsive
     - step: '02'
       name: Sistemas a medida
       description: Menos tareas repetitivas, más posibilidades. Plataformas, paneles e integraciones diseñados alrededor de cómo funciona tu negocio.
+      icon: ⌘
+      deliverables:
+        - Paneles de gestión y herramientas internas
+        - Automatización de tareas
+        - Integraciones entre tus servicios
     - step: '03'
       name: Aplicaciones móviles
       description: Tu idea, al alcance de la mano. Apps intuitivas que conectan tu servicio con las personas, donde sea que estén.
+      icon: ◫
+      deliverables:
+        - Diseño de interfaces móviles
+        - Flujos claros para tus usuarios
+        - Desarrollo según las necesidades del producto
     - step: '04'
       name: Estrategia web & SEO
       description: Una buena web también necesita ser encontrada. Estructura, contenido y optimización técnica con una dirección clara para crecer.
+      icon: ◎
+      deliverables:
+        - Revisión de estructura y contenidos
+        - Rendimiento y SEO técnico
+        - Un plan de mejoras con prioridades claras
+  eyebrow: LO QUE HAGO
+  text: Diseño y desarrollo conectados, con una solución pensada para lo que tu negocio necesita.
+  cta:
+    text: Hablemos de tu idea
+    href: /agendar-llamada
 expertise:
   heading: Un proceso claro. De principio a fin.
   items:
@@ -34,18 +76,56 @@ expertise:
       description: Desarrollo cada pieza, comparto avances y pruebo la experiencia en diferentes pantallas.
     - name: Lanzar y evolucionar
       description: Preparamos la salida, te enseño a gestionar tu proyecto y definimos los siguientes pasos para seguir mejorándolo.
+  eyebrow: CÓMO TRABAJAMOS
+  text: Siempre sabrás en qué estamos y qué viene después.
 about:
   heading: Una persona. Toda la atención en tu proyecto.
   text: Soy Mizradev, desarrollador web freelance. Me gusta convertir problemas complejos en experiencias simples. Trabajar conmigo significa hablar directamente con quien diseña y construye tu proyecto, con comunicación cercana y atención a cada detalle.
   cta:
     text: Conversemos sobre tu idea
     href: /agendar-llamada
-testimonials:
-  heading: Ideas en práctica
-  items: []
+  eyebrow: DETRÁS DE MIZRADEV
+  image: /assets/mizradev-retrato.webp
+  imageAlt: Mizradev tomando notas durante una reunión de trabajo
+  photoEyebrow: DETRÁS DEL CÓDIGO
+  photoHeading: |-
+    Una persona real.
+    Un compromiso contigo.
+  values:
+    - Comunicación directa
+    - Soluciones con propósito
+    - Cuidado en los detalles
+  collaborationImage: /assets/mizradev-equipo.webp
+  collaborationAlt: Mizradev colaborando con dos personas para revisar un proyecto digital
+  collaborationEyebrow: DE LA PRIMERA IDEA AL ÚLTIMO DETALLE
+  collaborationHeading: |-
+    Las mejores soluciones
+    se construyen conversando.
+  collaborationLink:
+    text: Hablemos de tu proyecto
+    href: /contact
 cta:
   heading: Las buenas ideas empiezan con una conversación.
   text: Ya sea una nueva web, una herramienta para tu negocio o esa app que tienes en mente. Vamos a darle forma.
   button:
     text: Agendar una llamada
     href: /agendar-llamada
+  eyebrow: ¿QUÉ TIENES EN MENTE?
+  secondaryCta:
+    text: O cuéntame tu idea por escrito
+    href: /contact
+specialties:
+  - Sitios web
+  - Sistemas a medida
+  - Apps móviles
+  - Estrategia SEO
+projects:
+  eyebrow: IDEAS EN PRÁCTICA
+  heading: |-
+    Así puede verse
+    tu próximo proyecto.
+  text: Una muestra de posibilidades. Conceptos de diseño creados para ilustrar lo que podemos construir juntos.
+  footerText: Tu negocio tiene su propia historia. Tu proyecto también debería.
+  cta:
+    text: Explorar todos los conceptos
+    href: /case-studies

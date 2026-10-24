@@ -18,5 +18,14 @@ navLinks:
     name: Contacto
     href: /contact
 footerText: Desarrollo web freelance. Diseño, código y estrategia para llevar tu próxima idea más lejos.
-copyright: © 2026 Mizradev
-footerGroups: []
+copyright: Hecho con intención.
+headerCta:
+  text: Agendar llamada
+  href: /agendar-llamada
+contactLink:
+  text: Contactar por escrito
+  href: /contact
+footerCta:
+  text: Agendar una llamada
+  href: /agendar-llamada
+backToTop: Volver arriba ↑

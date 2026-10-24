@@ -1,44 +1,49 @@
 ---
-import { getSingleton } from '../../lib/keystatic';
+import { assetUrl, getSingleton } from '../../lib/keystatic';
 const { about } = await getSingleton('home');
 ---
 
 <section id="sobre-mi" class="section shell about-section">
   <figure class="about-photo">
     <img
-      src="/assets/mizradev-retrato.webp"
+      src={assetUrl(about.image)}
       width="1200"
       height="802"
-      alt="Mizradev tomando notas durante una reunión de trabajo"
+      alt={about.imageAlt}
       loading="lazy"
     /><figcaption>
-      <span>DETRÁS DEL CÓDIGO</span><strong>Una persona real.<br />Un compromiso contigo.</strong
-      ><span aria-hidden="true">✳</span>
+      <span>{about.photoEyebrow}</span><strong>{about.photoHeading}</strong><span aria-hidden="true"
+        >✳</span
+      >
     </figcaption>
   </figure>
   <div class="about-copy">
-    <span class="eyebrow">DETRÁS DE MIZRADEV</span><h2>{about.heading}</h2><p>{about.text}</p><div
+    <span class="eyebrow">{about.eyebrow}</span><h2>{about.heading}</h2><p>{about.text}</p><div
       class="about-values"
     >
-      <span>↗ Comunicación directa</span><span>↗ Soluciones con propósito</span><span
-        >↗ Cuidado en los detalles</span>
+      {about.values.map((value) => <span>↗ {value}</span>)}
     </div><a class="button button-dark" href={about.cta.href}
-      >{about.cta.text}<span aria-hidden="true">↗</span></a>
+      >{about.cta.text}<span aria-hidden="true">↗</span></a
+    >
   </div>
 </section>
 <section class="collaboration shell" aria-label="Colaboración en cada paso">
   <div class="collaboration-photo">
     <img
       data-scroll-image
-      src="/assets/mizradev-equipo.webp"
+      src={assetUrl(about.collaborationImage)}
       width="1535"
       height="1025"
-      alt="Mizradev colaborando con dos personas para revisar un proyecto digital"
+      alt={about.collaborationAlt}
       loading="lazy"
     />
   </div><div class="collaboration-caption">
-    <span class="eyebrow">DE LA PRIMERA IDEA AL ÚLTIMO DETALLE</span><p>
-      Las mejores soluciones<br />se construyen conversando.
-    </p><a href="/contact" class="round-arrow" aria-label="Hablemos de tu proyecto">↗</a>
+    <span class="eyebrow">{about.collaborationEyebrow}</span><p>
+      {about.collaborationHeading}
+    </p><a
+      href={about.collaborationLink.href}
+      class="round-arrow"
+      aria-label={about.collaborationLink.text}>↗</a
+    >
   </div>
 </section>

@@ -1,6 +1,7 @@
 import { createHmac, randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 import type { AstroCookies } from 'astro';
+import { getSecret } from 'astro:env/server';
 
 const scryptAsync = promisify(scrypt);
 
@@ -30,10 +31,10 @@ export type CookieRequest = {
 };
 
 export function getAuthConfig() {
-  const username = process.env.ADMIN_USERNAME?.trim() ?? '';
-  const passwordHash = process.env.ADMIN_PASSWORD_HASH?.trim() ?? '';
-  const sessionSecret = process.env.SESSION_SECRET?.trim() ?? '';
-  const totpSecret = process.env.ADMIN_TOTP_SECRET?.trim() ?? '';
+  const username = getSecret('ADMIN_USERNAME')?.trim() ?? '';
+  const passwordHash = getSecret('ADMIN_PASSWORD_HASH')?.trim() ?? '';
+  const sessionSecret = getSecret('SESSION_SECRET')?.trim() ?? '';
+  const totpSecret = getSecret('ADMIN_TOTP_SECRET')?.trim() ?? '';
 
   return {
     username,
@@ -46,7 +47,12 @@ export function getAuthConfig() {
 
 export function isAuthConfigured() {
   const { username, passwordHash, sessionSecret } = getAuthConfig();
-  return username.length > 0 && passwordHash.length > 0 && sessionSecret.length >= 32;
+  return (
+    username.length > 0 &&
+    username.length <= MAX_USERNAME_LENGTH &&
+    /^scrypt\$\d+\$\d+\$\d+\$[a-f0-9]{32}\$[a-f0-9]{128}$/i.test(passwordHash) &&
+    sessionSecret.length >= 32
+  );
 }
 
 export function cookieSecure(url: URL) {

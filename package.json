@@ -3,11 +3,12 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
+    "dev": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs dev",
+    "start": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs dev",
+    "serve": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
+    "build": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs build",
+    "preview": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs preview",
+    "astro": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs",
     "auth:hash": "node scripts/hash-password.mjs",
     "auth:secrets": "node scripts/generate-secrets.mjs"
   },

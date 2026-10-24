@@ -1,11 +1,58 @@
 ---
 import { getSingleton } from '../../lib/keystatic';
-const { plans, faq, heading, intro } = await getSingleton('pricing');
+const { plans, faq, heading, intro, eyebrow } = await getSingleton('pricing');
 ---
-<section id="planes" class="section engagement-section"><div class="shell">
-  <div class="section-intro"><span class="eyebrow">TRABAJEMOS JUNTOS</span><h2>{heading}</h2><p>{intro}</p></div>
-  <div class="engagement-grid">{plans.map((plan) => <article class:list={['engagement-card', { featured: plan.isFlagged }]}>
-    <span class="eyebrow">{plan.isFlagged ? 'UNA SOLUCIÓN A TU MEDIDA' : 'DISEÑO + DESARROLLO'}</span><h3>{plan.name}</h3><p>{plan.description}</p><strong>{plan.price}</strong><ul>{plan.features.map(feature => <li><span aria-hidden="true">✓</span> {feature}</li>)}</ul><a href={plan.href} class="button button-dark">{plan.action}<span aria-hidden="true">↗</span></a>
-  </article>)}</div>
-</div></section>
-<section id="preguntas" class="section shell faq-section"><div><span class="eyebrow">ANTES DE EMPEZAR</span><h2>{faq.heading}</h2><p>Lo esencial para dar el siguiente paso con confianza.</p><a href="/contact" class="text-link">Cuéntame tu idea <span aria-hidden="true">↗</span></a></div><div class="faq-list">{faq.items.map(item => <details><summary>{item.title}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div></section>
+
+<section id="planes" class="section engagement-section">
+  <div class="shell">
+    <div class="section-intro">
+      <span class="eyebrow">{eyebrow}</span><h2>{heading}</h2><p>{intro}</p>
+    </div>
+    <div class="engagement-grid">
+      {
+        plans.map((plan) => (
+          <article class:list={['engagement-card', { featured: plan.isFlagged }]}>
+            <h3>{plan.name}</h3>
+            <p>{plan.description}</p>
+            <strong>{plan.price}</strong>
+            <ul>
+              {plan.features.map((feature) => (
+                <li>
+                  <span aria-hidden="true">✓</span> {feature}
+                </li>
+              ))}
+            </ul>
+            <>
+              <span class="eyebrow">{plan.eyebrow}</span>
+              <a href={plan.href} class="button button-dark">
+                {plan.action}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<section id="preguntas" class="section shell faq-section">
+  <div>
+    <span class="eyebrow">{faq.eyebrow}</span><h2>{faq.heading}</h2><p>{faq.text}</p><a
+      href={faq.cta.href}
+      class="text-link">{faq.cta.text} <span aria-hidden="true">↗</span></a>
+  </div><div class="faq-list">
+    {
+      faq.items.map((item) => (
+        <details>
+          <>
+            <summary>
+              {item.title}
+              <span aria-hidden="true">+</span>
+            </summary>
+            <p>{item.answer}</p>
+          </>
+        </details>
+      ))
+    }
+  </div>
+</section>

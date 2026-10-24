@@ -1,31 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageIntro from '../components/shared/PageIntro.astro';
+import { getSingleton } from '../lib/keystatic';
+const content = await getSingleton('booking');
 ---
 
-<Layout
-  title="Agendar una llamada — Mizradev"
-  description="Reserva una sesión de conocimiento para conversar sobre tu idea, resolver dudas y definir el siguiente paso de tu proyecto."
->
-  <PageIntro
-    eyebrow="Agendar llamada"
-    title="Tu próxima idea empieza con una conversación."
-    text="Elige el día y la hora que mejor te funcionen. En esta sesión de conocimiento hablaremos de tu proyecto, tus objetivos y cómo puedo ayudarte."
-    showAction={false}
-  />
-  <section class="shell booking-section" aria-label="Reservar una sesión de conocimiento">
+<Layout title={content.seoTitle} description={content.seoDescription}>
+  <PageIntro {...content.intro} showAction={false} />
+  <section class="shell booking-section" aria-label={content.sectionLabel}>
     <iframe
       class="booking-calendar"
-      title="Calendario para agendar una sesión de conocimiento con Mizradev"
+      title={content.calendarTitle}
       width="100%"
       height="760"
-      src="https://tidycal.com/mizradev/sesion-conocimiento"></iframe>
+      src={content.calendarUrl}></iframe>
     <p class="booking-fallback">
-      ¿No aparece el calendario? <a
-        class="text-link"
-        href="https://tidycal.com/mizradev/sesion-conocimiento"
-        target="_blank"
-        rel="noopener noreferrer">Abrir calendario en otra pestaña ↗</a>
+      {content.fallbackText}
+      <a class="text-link" href={content.calendarUrl} target="_blank" rel="noopener noreferrer"
+        >{content.fallbackLabel}</a
+      >
     </p>
   </section>
 </Layout>

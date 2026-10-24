@@ -1,0 +1,18 @@
+name: Nexo
+title: Menos caos, más claridad
+category: Sistemas
+discipline: Sistema a medida · UI/UX
+visual: dashboard
+summary: Un panel pensado para simplificar la operación diaria de un negocio.
+challenge: Dar una vista clara del trabajo en curso a un negocio que necesita reunir proyectos, tareas y actividad en un solo espacio.
+approach: Una navegación lateral estable, indicadores fáciles de leer y una vista de actividad que ayuda a entender qué está pasando sin recorrer varias pantallas.
+outcome: Un concepto de panel de gestión que muestra cómo organizar información operativa. Los indicadores que aparecen en la interfaz son datos de demostración.
+scope:
+  - Arquitectura de información
+  - Panel de gestión
+  - Visualización de datos
+  - Diseño de interfaz
+order: 2
+featured: true
+image: null
+imageAlt: ''

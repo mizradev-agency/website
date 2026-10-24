@@ -6,12 +6,12 @@ const { cta } = await getSingleton('home');
 <section class="cta-section">
   <div class="shell">
     <div>
-      <span class="eyebrow">¿QUÉ TIENES EN MENTE?</span><h2>{cta.heading}</h2><p>{cta.text}</p><a
+      <span class="eyebrow">{cta.eyebrow}</span><h2>{cta.heading}</h2><p>{cta.text}</p><a
         class="button button-mint"
         href={cta.button.href}>{cta.button.text}<span aria-hidden="true">↗</span></a
       >
-      <a class="text-link cta-contact" href="/contact"
-        >O cuéntame tu idea por escrito <span aria-hidden="true">↗</span></a
+      <a class="text-link cta-contact" href={cta.secondaryCta.href}
+        >{cta.secondaryCta.text} <span aria-hidden="true">↗</span></a
       >
     </div><span class="cta-asterisk" aria-hidden="true">✳</span>
   </div>

@@ -6,8 +6,8 @@ const { expertise } = await getSingleton('home');
 <section id="proceso" class="section process-section">
   <div class="shell">
     <div class="section-intro">
-      <span class="eyebrow">CÓMO TRABAJAMOS</span><h2>{expertise.heading}</h2><p>
-        Siempre sabrás en qué estamos y qué viene después.
+      <span class="eyebrow">{expertise.eyebrow}</span><h2>{expertise.heading}</h2><p>
+        {expertise.text}
       </p>
     </div><div class="process-grid">
       {

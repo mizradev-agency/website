@@ -7,20 +7,23 @@ interface Props {
   href?: string;
   showAction?: boolean;
 }
+import { getSingleton } from '../../lib/keystatic';
+const site = await getSingleton('site');
 const {
   showAction = true,
   eyebrow,
   title,
   text,
-  action = 'Agendar una llamada',
-  href = '/agendar-llamada',
+  action = site.footerCta.text,
+  href = site.footerCta.href,
 } = Astro.props;
 ---
 
 <section class="shell page-intro">
   <div class="page-intro-top">
     <span class="eyebrow">{eyebrow}</span><a href="/" class="back-home"
-      >Mizradev <span aria-hidden="true">/</span> {eyebrow}</a>
+      >{site.brandName} <span aria-hidden="true">/</span> {eyebrow}</a
+    >
   </div>
   <h1>{title}</h1>
   <div class="page-intro-bottom">
@@ -32,8 +35,9 @@ const {
             <span aria-hidden="true">↗</span>
           </a>
         )
-      }<a class="text-link" href="/contact"
-        >Contactar por escrito <span aria-hidden="true">↗</span></a>
+      }<a class="text-link" href={site.contactLink.href}
+        >{site.contactLink.text} <span aria-hidden="true">↗</span></a
+      >
     </div>
   </div>
 </section>

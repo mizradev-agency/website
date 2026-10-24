@@ -9,11 +9,10 @@ const email = contact.info.email;
 <Layout title={contact.seoTitle} description={contact.seoDescription}>
   <section class="shell section contact-layout">
     <div>
-      <span class="eyebrow">EL SIGUIENTE PASO EMPIEZA AQUÍ</span><h1>{contact.form.heading}</h1><p>
+      <span class="eyebrow">{contact.eyebrow}</span><h1>{contact.form.heading}</h1><p>
         {contact.form.text}
       </p><p>
-        No necesitas tenerlo todo resuelto. Cuéntame qué quieres lograr y preparemos el punto de
-        partida.
+        {contact.extraText}
       </p>{
         email && (
           <a class="text-link" href={`mailto:${email}`}>
@@ -21,15 +20,23 @@ const email = contact.info.email;
           </a>
         )
       }<div class="contact-schedule">
-        <a class="button button-dark" href="/agendar-llamada"
-          >¿Prefieres conversar? Agenda una llamada <span aria-hidden="true">↗</span></a>
+        <a class="button button-dark" href={contact.scheduleLink.href}
+          >{contact.scheduleLink.text} <span aria-hidden="true">↗</span></a
+        >
       </div><div class="contact-back">
-        <a class="text-link" href="/#servicios">← Explorar servicios</a>
+        <a class="text-link" href={contact.backLink.href}>{contact.backLink.text}</a>
       </div>
     </div>
-    <form class="contact-form" data-contact-form data-email={email || ''}>
+    <form
+      class="contact-form"
+      data-contact-form
+      data-email={email || ''}
+      data-email-subject={contact.form.emailSubject}
+      data-status-email={contact.form.statusEmail}
+      data-status-download={contact.form.statusDownload}
+    >
       <label for="name"
-        >Tu nombre<input
+        >{contact.form.nameLabel}<input
           id="name"
           name="name"
           autocomplete="name"
@@ -39,7 +46,7 @@ const email = contact.info.email;
         /></label
       >
       <label for="email"
-        >Tu correo<input
+        >{contact.form.emailLabel}<input
           id="email"
           name="email"
           type="email"
@@ -50,14 +57,14 @@ const email = contact.info.email;
         /></label
       >
       <label for="service"
-        >¿En qué puedo ayudarte?<select id="service" name="service"
-          ><option value="">Selecciona un servicio</option>{
+        >{contact.form.serviceLabel}<select id="service" name="service"
+          ><option value="">{contact.form.servicePlaceholder}</option>{
             services.items.map((item) => <option value={item.name}>{item.name}</option>)
-          }<option>No estoy seguro todavía</option></select
+          }<option>{contact.form.unsureOption}</option></select
         ></label
       >
       <label for="message"
-        >Cuéntame tu idea<textarea
+        >{contact.form.messageLabel}<textarea
           id="message"
           name="message"
           rows="5"
@@ -66,14 +73,11 @@ const email = contact.info.email;
           maxlength="5000"></textarea></label
       >
       <p class="form-note">
-        {
-          email
-            ? 'Al continuar se abrirá tu aplicación de correo con el mensaje listo para revisar y enviar.'
-            : 'El contacto directo estará disponible pronto. Por ahora puedes descargar el resumen de tu proyecto; este formulario no envía tus datos.'
-        }
+        {email ? contact.form.noteEmail : contact.form.noteDownload}
       </p>
       <button class="button button-dark" type="submit"
-        >{email ? contact.form.submitLabel : 'Descargar mi idea'}<span aria-hidden="true">↗</span
+        >{email ? contact.form.submitLabel : contact.form.downloadLabel}<span aria-hidden="true"
+          >↗</span
         ></button
       ><p class="contact-status" role="status" aria-live="polite"></p>
     </form>
@@ -98,11 +102,9 @@ const email = contact.info.email;
       const status = form.querySelector<HTMLElement>('[role="status"]');
       if (form.dataset.email) {
         window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
-          'Nuevo proyecto — Mizradev'
+          form.dataset.emailSubject || ''
         )}&body=${encodeURIComponent(text)}`;
-        if (status)
-          status.textContent =
-            'Tu mensaje está preparado. Revisa y envía desde tu aplicación de correo. Si no se abrió, utiliza el correo de contacto que aparece en esta página.';
+        if (status) status.textContent = form.dataset.statusEmail || '';
       } else {
         const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
         const link = document.createElement('a');
@@ -110,7 +112,7 @@ const email = contact.info.email;
         link.download = 'mi-proyecto-mizradev.txt';
         link.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
-        if (status) status.textContent = 'Resumen descargado. No se ha enviado ningún mensaje.';
+        if (status) status.textContent = form.dataset.statusDownload || '';
       }
     });
   }

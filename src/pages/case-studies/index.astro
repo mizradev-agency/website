@@ -3,35 +3,68 @@ import Layout from '../../layouts/Layout.astro';
 import PageIntro from '../../components/shared/PageIntro.astro';
 import ProjectCard from '../../components/shared/ProjectCard.astro';
 import Cta from '../../components/home/Cta.astro';
-import { projects } from '../../data/projects';
+import { getProjects, getSingleton } from '../../lib/keystatic';
+const projects = await getProjects();
+const content = await getSingleton('caseStudies');
+const categories = [
+  content.allLabel,
+  ...new Set(projects.map((project) => project.category).filter(Boolean)),
+];
 ---
-<Layout title="Proyectos y conceptos digitales — Mizradev" description="Explora conceptos de e-commerce, sistemas de gestión, apps móviles y webs editoriales. Diseño pensado para resolver necesidades concretas.">
- <PageIntro eyebrow="Proyectos / Case studies" title="Ideas que ya puedes imaginar en acción." text="Explora distintas formas de conectar diseño y tecnología. Estos conceptos muestran cómo podría tomar forma tu próxima web, sistema o aplicación." />
- <section class="shell section case-gallery" aria-label="Galería de conceptos" data-case-gallery>
-  <div class="case-filters" role="group" aria-label="Filtrar proyectos">{['Todos','Web','Sistemas','Apps'].map((category,i) => <button type="button" data-filter={category} aria-pressed={i === 0 ? 'true' : 'false'}>{category}</button>)}</div>
-  <p class="sr-only" role="status" aria-live="polite" data-filter-status>4 conceptos</p>
-  <div class="projects-grid">{projects.map(project => <ProjectCard project={project} />)}</div>
-  <p class="case-disclaimer">Exploraciones de diseño, no proyectos de clientes. Las marcas y los datos de las interfaces son ilustrativos.</p>
- </section><Cta />
+
+<Layout title={content.seoTitle} description={content.seoDescription}>
+  <PageIntro {...content.intro} />
+  <section
+    class="shell section case-gallery"
+    aria-label={content.galleryLabel}
+    data-case-gallery
+    data-all-label={content.allLabel}
+  >
+    <div class="case-filters" role="group" aria-label={content.filterLabel}>
+      {
+        categories.map((category, i) => (
+          <button type="button" data-filter={category} aria-pressed={i === 0 ? 'true' : 'false'}>
+            {category}
+          </button>
+        ))
+      }
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" data-filter-status>
+      {projects.length} conceptos
+    </p>
+    <div class="projects-grid">{projects.map((project) => <ProjectCard project={project} />)}</div>
+    <p class="case-disclaimer">{content.disclaimer}</p>
+  </section><Cta />
 </Layout>
 <script>
- function setupGallery() {
-  const gallery = document.querySelector<HTMLElement>('[data-case-gallery]');
-  if (!gallery || gallery.dataset.ready) return;
-  gallery.dataset.ready = 'true';
-  const buttons = [...gallery.querySelectorAll<HTMLButtonElement>('[data-filter]')];
-  const cards = [...gallery.querySelectorAll<HTMLElement>('[data-category]')];
-  buttons.forEach(button => button.addEventListener('click', () => {
-   const category = button.dataset.filter;
-   buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-   cards.forEach(card => {
-    card.hidden = category !== 'Todos' && card.dataset.category !== category;
-    if (!card.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches) card.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:280,easing:'ease-out'});
-   });
-   const count = cards.filter(card => !card.hidden).length;
-   gallery.querySelector('[data-filter-status]')!.textContent = `${count} ${count === 1 ? 'concepto' : 'conceptos'}: ${category}`;
-  }));
- }
- document.addEventListener('astro:page-load', setupGallery);
- setupGallery();
+  function setupGallery() {
+    const gallery = document.querySelector<HTMLElement>('[data-case-gallery]');
+    if (!gallery || gallery.dataset.ready) return;
+    gallery.dataset.ready = 'true';
+    const buttons = [...gallery.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const cards = [...gallery.querySelectorAll<HTMLElement>('[data-category]')];
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const category = button.dataset.filter;
+        buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        cards.forEach((card) => {
+          card.hidden = category !== gallery.dataset.allLabel && card.dataset.category !== category;
+          if (!card.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+            card.animate(
+              [
+                { opacity: 0, transform: 'translateY(8px)' },
+                { opacity: 1, transform: 'translateY(0)' },
+              ],
+              { duration: 280, easing: 'ease-out' }
+            );
+        });
+        const count = cards.filter((card) => !card.hidden).length;
+        gallery.querySelector('[data-filter-status]')!.textContent = `${count} ${
+          count === 1 ? 'concepto' : 'conceptos'
+        }: ${category}`;
+      })
+    );
+  }
+  document.addEventListener('astro:page-load', setupGallery);
+  setupGallery();
 </script>

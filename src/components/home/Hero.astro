@@ -6,7 +6,7 @@ const { hero } = await getSingleton('home');
 
 <section class="hero shell">
   <div class="hero-eyebrow">
-    <span class="eyebrow"><i class="status-dot"></i> MIZRADEV · DESARROLLO INDEPENDIENTE</span>
+    <span class="eyebrow"><i class="status-dot"></i> {hero.eyebrow}</span>
   </div>
   <h1 data-hero-title>{hero.heading}</h1>
   <p class="hero-intro">{hero.text}</p>
@@ -14,7 +14,9 @@ const { hero } = await getSingleton('home');
     <a class="button button-dark hero-action" href={hero.cta.href}
       >{hero.cta.text}<span aria-hidden="true">↗</span></a
     >
-    <a class="text-link" href="/contact">Prefiero escribirte <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={hero.secondaryCta.href}
+      >{hero.secondaryCta.text} <span aria-hidden="true">↗</span></a
+    >
   </div>
   <div class="hero-showcase">
     <div class="hero-photo-window">
@@ -27,20 +29,18 @@ const { hero } = await getSingleton('home');
         fetchpriority="high"
       />
     </div>
-    <span class="photo-index">01 / IDEAS QUE TOMAN FORMA</span>
+    <span class="photo-index">{hero.photoIndex}</span>
     <div class="showcase-label">
       <span class="status-dot"></span><div>
-        <strong>Diseño con intención.<br />Código con propósito.</strong><span
-          >Tu idea, en buenas manos.</span
-        >
-      </div><a href="#sobre-mi" aria-label="Conoce a Mizradev">↗</a>
+        <strong>{hero.showcaseHeading}</strong><span>{hero.showcaseText}</span>
+      </div><a href={hero.showcaseLink.href} aria-label={hero.showcaseLink.text}>↗</a>
     </div>
-    <a class="showcase-corner" href="#servicios"
-      >Descubre lo que podemos crear <span aria-hidden="true">↓</span></a
+    <a class="showcase-corner" href={hero.cornerLink.href}
+      >{hero.cornerLink.text} <span aria-hidden="true">↓</span></a
     >
   </div>
   <div class="hero-caption">
-    <span>DISEÑO + CÓDIGO + ESTRATEGIA</span><span>De tu idea al mundo digital. ↗</span>
+    <span>{hero.captionLeft}</span><span>{hero.captionRight}</span>
   </div>
 </section>
 <Marquee />

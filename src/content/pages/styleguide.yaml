@@ -1,5 +1,33 @@
-seoTitle: Styleguide · Stone
-seoDescription: Style guide for Stone premium Astro theme
-heading: Styleguide
-colorsHeading: Colors
-typographyHeading: Typography
+seoTitle: Paleta y estilo — Mizradev
+seoDescription: 'La identidad visual de Mizradev: verdes, lavanda y durazno, con tipografía Manrope.'
+eyebrow: IDENTIDAD MIZRADEV
+heading: Una paleta con nuevas posibilidades.
+text: El verde conserva la esencia. La lavanda y el durazno aportan contraste suave y calidez.
+colors:
+  - name: Tinta
+    hex: '#0d2920'
+    use: Texto y botones principales
+  - name: Bosque
+    hex: '#225543'
+    use: Bloques de marca y detalles
+  - name: Menta
+    hex: '#79efb4'
+    use: Llamadas a la acción
+  - name: Papel
+    hex: '#f7f9f6'
+    use: Fondo principal
+  - name: Lavanda
+    hex: '#d9cef2'
+    use: Sistemas y experiencias digitales
+  - name: Durazno
+    hex: '#f4c7aa'
+    use: Proyectos y estrategia
+typography:
+  eyebrow: TIPOGRAFÍA · MANROPE
+  heading: |-
+    Diseño con intención.
+    Código con propósito.
+  text: Textos claros, títulos amplios y una experiencia fácil de recorrer.
+  cta:
+    text: Hablemos de tu proyecto
+    href: /agendar-llamada

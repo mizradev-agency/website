@@ -1,17 +1,85 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const colors = [
-  { name: 'Tinta', hex: '#0d2920', use: 'Texto y botones principales' },
-  { name: 'Bosque', hex: '#225543', use: 'Bloques de marca y detalles' },
-  { name: 'Menta', hex: '#79efb4', use: 'Llamadas a la acción' },
-  { name: 'Papel', hex: '#f7f9f6', use: 'Fondo principal' },
-  { name: 'Lavanda', hex: '#d9cef2', use: 'Sistemas y experiencias digitales' },
-  { name: 'Durazno', hex: '#f4c7aa', use: 'Proyectos y estrategia' },
-];
+import { getSingleton } from '../lib/keystatic';
+const content = await getSingleton('styleguide');
+const { colors } = content;
 ---
-<Layout title="Paleta y estilo — Mizradev" description="La identidad visual de Mizradev: verdes, lavanda y durazno, con tipografía Manrope.">
-<section class="shell section"><span class="eyebrow">IDENTIDAD MIZRADEV</span><h1>Una paleta con nuevas posibilidades.</h1><p>El verde conserva la esencia. La lavanda y el durazno aportan contraste suave y calidez.</p><div class="palette">{colors.map(color => <article><div class="swatch" style={`background:${color.hex}`}></div><h2>{color.name}</h2><code>{color.hex}</code><p>{color.use}</p></article>)}</div><div class="type-sample"><span class="eyebrow">TIPOGRAFÍA · MANROPE</span><h2>Diseño con intención.<br />Código con propósito.</h2><p>Textos claros, títulos amplios y una experiencia fácil de recorrer.</p><a class="button button-dark" href="/agendar-llamada">Hablemos de tu proyecto <span aria-hidden="true">↗</span></a></div></section>
+
+<Layout title={content.seoTitle} description={content.seoDescription}>
+  <section class="shell section">
+    <span class="eyebrow">{content.eyebrow}</span><h1>{content.heading}</h1><p>
+      {content.text}
+    </p><div class="palette">
+      {
+        colors.map((color) => (
+          <article>
+            <h2>{color.name}</h2>
+            <code>{color.hex}</code>
+            <>
+              <div class="swatch" style={`background:${color.hex}`} />
+              <p>{color.use}</p>
+            </>
+          </article>
+        ))
+      }
+    </div><div class="type-sample">
+      <span class="eyebrow">{content.typography.eyebrow}</span><h2>
+        {content.typography.heading}
+      </h2><p>{content.typography.text}</p><a
+        class="button button-dark"
+        href={content.typography.cta.href}
+        >{content.typography.cta.text} <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </Layout>
 <style>
-h1 {font-size:clamp(42px,5vw,72px);line-height:1.06;letter-spacing:-.06em;max-width:850px;margin:25px 0} p {font-size:15px;line-height:1.8;color:var(--muted)} .palette {display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px} .swatch {height:180px;border-radius:20px;border:1px solid var(--line)} .palette h2 {font-size:25px;letter-spacing:-1px;margin:20px 0 10px} code {font-size:13px} .type-sample {margin-top:80px} .type-sample h2 {margin:25px 0} .type-sample .button {margin-top:20px} @media(max-width:600px){.palette{grid-template-columns:1fr 1fr;gap:25px 16px}.swatch{height:125px}}
+  h1 {
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.06;
+    letter-spacing: -0.06em;
+    max-width: 850px;
+    margin: 25px 0;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 60px;
+  }
+  .swatch {
+    height: 180px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+  }
+  .palette h2 {
+    font-size: 25px;
+    letter-spacing: -1px;
+    margin: 20px 0 10px;
+  }
+  code {
+    font-size: 13px;
+  }
+  .type-sample {
+    margin-top: 80px;
+  }
+  .type-sample h2 {
+    margin: 25px 0;
+  }
+  .type-sample .button {
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) {
+    .palette {
+      grid-template-columns: 1fr 1fr;
+      gap: 25px 16px;
+    }
+    .swatch {
+      height: 125px;
+    }
+  }
 </style>

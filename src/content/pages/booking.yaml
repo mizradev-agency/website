@@ -1,0 +1,13 @@
+seoTitle: Agendar una llamada — Mizradev
+seoDescription: Reserva una sesión de conocimiento para conversar sobre tu idea, resolver dudas y definir el siguiente paso de tu proyecto.
+intro:
+  eyebrow: Agendar llamada
+  title: Tu próxima idea empieza con una conversación.
+  text: Elige el día y la hora que mejor te funcionen. En esta sesión de conocimiento hablaremos de tu proyecto, tus objetivos y cómo puedo ayudarte.
+  action: Agendar una llamada
+  href: /agendar-llamada
+sectionLabel: Reservar una sesión de conocimiento
+calendarTitle: Calendario para agendar una sesión de conocimiento con Mizradev
+calendarUrl: https://tidycal.com/mizradev/sesion-conocimiento
+fallbackText: ¿No aparece el calendario?
+fallbackLabel: Abrir calendario en otra pestaña ↗

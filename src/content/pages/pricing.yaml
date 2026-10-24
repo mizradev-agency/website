@@ -1,12 +1,11 @@
-seoTitle: Servicios y presupuestos — Mizradev
-seoDescription: Encuentra el punto de partida para tu web, sistema o aplicación. Alcance y presupuesto definidos según tu proyecto.
+seoTitle: Servicios y propuestas a medida — Mizradev
+seoDescription: Sitios web, sistemas a medida, aplicaciones móviles y SEO. Una propuesta adaptada al alcance de tu proyecto.
 heading: Tu proyecto, a tu manera.
 intro: Cada idea tiene necesidades distintas. Definimos juntos el alcance, los tiempos y el presupuesto antes de empezar.
 plans:
   - name: Tu presencia digital
     description: Para presentar tu negocio con una web clara, cuidada y fácil de usar.
     price: A cotizar
-    periodicity: ''
     isFlagged: false
     action: Hablemos de tu web
     href: /agendar-llamada
@@ -15,10 +14,10 @@ plans:
       - Experiencia móvil y escritorio
       - Estructura y SEO técnico
       - Orientación para gestionar tu sitio
+    eyebrow: DISEÑO + DESARROLLO
   - name: Tu siguiente gran idea
     description: Para resolver un reto de tu negocio con un sistema o una aplicación propia.
     price: A tu medida
-    periodicity: ''
     isFlagged: true
     action: Dar forma a mi idea
     href: /agendar-llamada
@@ -27,10 +26,10 @@ plans:
       - Interfaces pensadas para tus usuarios
       - Desarrollo e integraciones
       - Pruebas antes del lanzamiento
+    eyebrow: UNA SOLUCIÓN A TU MEDIDA
   - name: Evoluciona tu web
     description: Para mejorar lo que ya tienes y preparar tu proyecto para su siguiente etapa.
     price: Según alcance
-    periodicity: ''
     isFlagged: false
     action: Revisemos mi proyecto
     href: /agendar-llamada
@@ -39,6 +38,7 @@ plans:
       - Mejoras de velocidad y usabilidad
       - Optimización técnica SEO
       - Nuevas funcionalidades
+    eyebrow: DISEÑO + DESARROLLO
 faq:
   heading: Buenas preguntas. Respuestas claras.
   items:
@@ -54,9 +54,17 @@ faq:
       answer: Sí. Podemos revisar su diseño, rendimiento y estructura para decidir qué conviene conservar, mejorar o reconstruir según tus objetivos.
     - title: ¿Qué pasa después del lanzamiento?
       answer: Te orientaré para gestionar tu proyecto. Si necesitas mantenimiento o nuevas funciones, podemos definir juntos el alcance de esa siguiente etapa.
-cta:
-  heading: Hablemos de lo que necesitas.
-  text: No necesitas tener todas las respuestas. Empecemos por tu idea.
-  button:
-    text: Cuéntame tu proyecto
-    href: /agendar-llamada
+  eyebrow: ANTES DE EMPEZAR
+  text: Lo esencial para dar el siguiente paso con confianza.
+  cta:
+    text: Cuéntame tu idea
+    href: /contact
+introPage:
+  eyebrow: UNA PROPUESTA PARA TU PROYECTO
+  title: |-
+    Cada idea es diferente.
+    Su solución también.
+  text: El presupuesto depende del alcance, las funcionalidades y los tiempos. Cuéntame qué necesitas para preparar una propuesta a tu medida.
+  action: Agendar una llamada
+  href: /agendar-llamada
+eyebrow: TRABAJEMOS JUNTOS

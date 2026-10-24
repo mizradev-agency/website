@@ -16,3 +16,23 @@ form:
   emailPlaceholder: tu@correo.com
   messagePlaceholder: ¿Qué te gustaría construir? Cuéntame tus objetivos y en qué etapa está tu proyecto.
   submitLabel: Preparar mensaje
+  nameLabel: Tu nombre
+  emailLabel: Tu correo
+  serviceLabel: ¿En qué puedo ayudarte?
+  servicePlaceholder: Selecciona un servicio
+  unsureOption: No estoy seguro todavía
+  messageLabel: Cuéntame tu idea
+  noteEmail: Al continuar se abrirá tu aplicación de correo con el mensaje listo para revisar y enviar.
+  noteDownload: El contacto directo estará disponible pronto. Por ahora puedes descargar el resumen de tu proyecto; este formulario no envía tus datos.
+  downloadLabel: Descargar mi idea
+  emailSubject: Nuevo proyecto — Mizradev
+  statusEmail: Tu mensaje está preparado. Revisa y envía desde tu aplicación de correo. Si no se abrió, utiliza el correo de contacto que aparece en esta página.
+  statusDownload: Resumen descargado. No se ha enviado ningún mensaje.
+eyebrow: EL SIGUIENTE PASO EMPIEZA AQUÍ
+extraText: No necesitas tenerlo todo resuelto. Cuéntame qué quieres lograr y preparemos el punto de partida.
+scheduleLink:
+  text: ¿Prefieres conversar? Agenda una llamada
+  href: /agendar-llamada
+backLink:
+  text: ← Explorar servicios
+  href: /#servicios

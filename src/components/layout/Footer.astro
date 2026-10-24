@@ -15,19 +15,19 @@ const site = await getSingleton('site');
           alt={site.brandName}
         /></a
       ><p>{site.footerText}</p><div class="footer-actions">
-        <a class="text-link" href="/agendar-llamada"
-          >Agendar una llamada <span aria-hidden="true">↗</span></a
-        ><a class="text-link" href="/contact"
-          >Contactar por escrito <span aria-hidden="true">↗</span></a
+        <a class="text-link" href={site.footerCta.href}
+          >{site.footerCta.text} <span aria-hidden="true">↗</span></a
+        ><a class="text-link" href={site.contactLink.href}
+          >{site.contactLink.text} <span aria-hidden="true">↗</span></a
         >
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {new Date().getFullYear()} {site.brandName}. Hecho con intención.</span><nav
+      <span>© {new Date().getFullYear()} {site.brandName}. {site.copyright}</span><nav
         aria-label="Navegación del pie"
       >
         {site.navLinks.map((link) => <a href={link.href}>{link.name}</a>)}
-      </nav><a href="#main-content">Volver arriba ↑</a>
+      </nav><a href="#main-content">{site.backToTop}</a>
     </div>
   </div>
 </footer>
