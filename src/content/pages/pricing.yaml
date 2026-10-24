@@ -9,7 +9,7 @@ plans:
     periodicity: ''
     isFlagged: false
     action: Hablemos de tu web
-    href: /contact?servicio=Sitios%20%26%20p%C3%A1ginas%20web
+    href: /agendar-llamada
     features:
       - Diseño adaptado a tu marca
       - Experiencia móvil y escritorio
@@ -21,7 +21,7 @@ plans:
     periodicity: ''
     isFlagged: true
     action: Dar forma a mi idea
-    href: /contact
+    href: /agendar-llamada
     features:
       - Definición de alcance y prioridades
       - Interfaces pensadas para tus usuarios
@@ -33,7 +33,7 @@ plans:
     periodicity: ''
     isFlagged: false
     action: Revisemos mi proyecto
-    href: /contact?servicio=Estrategia%20web%20%26%20SEO
+    href: /agendar-llamada
     features:
       - Revisión de la experiencia actual
       - Mejoras de velocidad y usabilidad
@@ -59,4 +59,4 @@ cta:
   text: No necesitas tener todas las respuestas. Empecemos por tu idea.
   button:
     text: Cuéntame tu proyecto
-    href: /contact
+    href: /agendar-llamada

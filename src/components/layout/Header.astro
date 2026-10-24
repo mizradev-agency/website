@@ -2,20 +2,92 @@
 import { assetUrl, getSingleton } from '../../lib/keystatic';
 const site = await getSingleton('site');
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const active = (href: string) => href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
+const active = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
 ---
+
 <header class="site-header" data-site-header>
   <div class="shell nav-bar">
-    <a href="/" aria-label="Mizradev, inicio" class="brand"><img src={assetUrl(site.logoDark) || '/assets/mizradev-logo.png'} width="220" height="40" alt={site.brandName} /></a>
-    <nav class="desktop-nav" aria-label="Navegación principal">{site.navLinks.map(link => <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>{link.name}</a>)}</nav>
-    <a href="/contact" class="button button-dark nav-cta">Hablemos de tu idea <span aria-hidden="true">↗</span></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span class="menu-word">Menú</span><span class="hamburger" aria-hidden="true"><i></i><i></i></span></button>
+    <a href="/" aria-label="Mizradev, inicio" class="brand"
+      ><img
+        src={assetUrl(site.logoDark) || '/assets/mizradev-logo.png'}
+        width="220"
+        height="40"
+        alt={site.brandName}
+      /></a
+    >
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      {
+        site.navLinks.map((link) => (
+          <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>
+            {link.name}
+          </a>
+        ))
+      }
+    </nav>
+    <a href="/agendar-llamada" class="button button-dark nav-cta"
+      >Agendar llamada <span aria-hidden="true">↗</span></a
+    >
+    <button
+      class="theme-toggle"
+      type="button"
+      data-theme-toggle
+      aria-label="Cambiar a modo oscuro"
+      aria-pressed="false"
+    >
+      <svg
+        class="theme-moon"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10.1 10.1Z"></path></svg
+      >
+      <svg
+        class="theme-sun"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+        ><circle cx="12" cy="12" r="4"></circle><path
+          d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+        ></path></svg
+      >
+    </button>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Abrir menú"
+      ><span class="menu-word">Menú</span><span class="hamburger" aria-hidden="true"
+        ><i></i><i></i></span
+      ></button
+    >
   </div>
-  <nav id="mobile-menu" class="mobile-nav" hidden aria-label="Navegación móvil"><div class="shell">
-    {site.navLinks.map((link, i) => <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}><span><small>0{i+1}</small>{link.name}</span><span aria-hidden="true">↗</span></a>)}
-    <a href="/contact">Hablemos de tu idea <span aria-hidden="true">↗</span></a>
-    <p>Desarrollo independiente. Ideas sin límites.</p>
-  </div></nav>
+  <nav id="mobile-menu" class="mobile-nav" hidden aria-label="Navegación móvil">
+    <div class="shell">
+      {
+        site.navLinks.map((link, i) => (
+          <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>
+            <>
+              <span>
+                <small>0{i + 1}</small>
+                {link.name}
+              </span>
+              <span aria-hidden="true">↗</span>
+            </>
+          </a>
+        ))
+      }
+      <p>Desarrollo independiente. Ideas sin límites.</p>
+    </div>
+  </nav>
 </header>
 <script>
   let cleanupHeader: (() => void) | undefined;
@@ -35,14 +107,44 @@ const active = (href: string) => href === '/' ? path === '/' : path === href || 
       if (returnFocus) button.focus();
     }
     button.addEventListener('click', () => setOpen(menu.hidden), opts);
-    menu.addEventListener('click', e => { if ((e.target as Element).closest('a')) setOpen(false); }, opts);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setOpen(false, true); }, opts);
-    document.addEventListener('click', e => { if (!header.contains(e.target as Node)) setOpen(false); }, opts);
-    document.addEventListener('focusin', e => { if (!header.contains(e.target as Node)) setOpen(false); }, opts);
+    menu.addEventListener(
+      'click',
+      (e) => {
+        if ((e.target as Element).closest('a')) setOpen(false);
+      },
+      opts
+    );
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape' && !menu.hidden) setOpen(false, true);
+      },
+      opts
+    );
+    document.addEventListener(
+      'click',
+      (e) => {
+        if (!header.contains(e.target as Node)) setOpen(false);
+      },
+      opts
+    );
+    document.addEventListener(
+      'focusin',
+      (e) => {
+        if (!header.contains(e.target as Node)) setOpen(false);
+      },
+      opts
+    );
     const scrolled = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
     window.addEventListener('scroll', scrolled, { passive: true, signal: events.signal });
-    const desktop = matchMedia('(min-width: 901px)');
-    desktop.addEventListener('change', () => { if (desktop.matches) setOpen(false); }, opts);
+    const desktop = matchMedia('(min-width: 1101px)');
+    desktop.addEventListener(
+      'change',
+      () => {
+        if (desktop.matches) setOpen(false);
+      },
+      opts
+    );
     scrolled();
     cleanupHeader = () => events.abort();
   }

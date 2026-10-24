@@ -11,6 +11,12 @@ navLinks:
   - ref: '03'
     name: Sobre mí
     href: /about
+  - ref: '04'
+    name: Agendar llamada
+    href: /agendar-llamada
+  - ref: '05'
+    name: Contacto
+    href: /contact
 footerText: Desarrollo web freelance. Diseño, código y estrategia para llevar tu próxima idea más lejos.
 copyright: © 2026 Mizradev
 footerGroups: []

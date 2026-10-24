@@ -4,10 +4,10 @@ hero:
   heading: Transformo tu idea en una experiencia digital que conecta.
   text: Soy desarrollador freelance. Combino diseño, código y estrategia para crear sitios web, sistemas y apps que le dan impulso a tu negocio.
   cta:
-    text: Hablemos de tu proyecto
-    href: /contact
-  image: /assets/hero/image.webp
-  imageAlt: Un espacio tranquilo para dar forma a nuevas ideas, con escritorio, portátil y plantas.
+    text: Agenda una llamada
+    href: /agendar-llamada
+  image: /assets/mizradev-trabajando.webp
+  imageAlt: Mizradev diseñando y desarrollando un proyecto en su espacio de trabajo.
 services:
   heading: Todo lo que necesitas para dar el siguiente paso.
   items:
@@ -38,8 +38,8 @@ about:
   heading: Una persona. Toda la atención en tu proyecto.
   text: Soy Mizradev, desarrollador web freelance. Me gusta convertir problemas complejos en experiencias simples. Trabajar conmigo significa hablar directamente con quien diseña y construye tu proyecto, con comunicación cercana y atención a cada detalle.
   cta:
-    text: Cuéntame qué tienes en mente
-    href: /contact
+    text: Conversemos sobre tu idea
+    href: /agendar-llamada
 testimonials:
   heading: Ideas en práctica
   items: []
@@ -47,5 +47,5 @@ cta:
   heading: Las buenas ideas empiezan con una conversación.
   text: Ya sea una nueva web, una herramienta para tu negocio o esa app que tienes en mente. Vamos a darle forma.
   button:
-    text: Empecemos tu proyecto
-    href: /contact
+    text: Agendar una llamada
+    href: /agendar-llamada

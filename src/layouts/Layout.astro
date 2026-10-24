@@ -2,10 +2,12 @@
 import '../styles/brand.css';
 import '../styles/agenc.css';
 import '../styles/experience.css';
-import { ClientRouter  } from "astro:transitions";
+import '../styles/hulio.css';
+import { ClientRouter } from 'astro:transitions';
 import Footer from '../components/layout/Footer.astro';
 import Header from '../components/layout/Header.astro';
 import Motion from '../components/layout/Motion.astro';
+import Theme from '../components/layout/Theme.astro';
 
 interface Props {
   description: string;
@@ -15,12 +17,26 @@ interface Props {
 const { description, title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="preload" href="/fonts/manrope/manrope-400.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/fonts/manrope/manrope-500.ttf" as="font" type="font/ttf" crossorigin />
+    <meta name="color-scheme" content="light dark" />
+    <Theme />
+    <link
+      rel="preload"
+      href="/fonts/manrope/manrope-400.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/manrope/manrope-500.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -29,9 +45,7 @@ const { description, title } = Astro.props;
     <title>{title}</title>
     <ClientRouter />
   </head>
-  <body
-    class="bg-primary-50 text-primary-950 dark:bg-primary-950 dark:text-primary-200 antialiased transition"
-  >
+  <body class="antialiased">
     <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <Header />
     <main id="main-content">
@@ -49,27 +63,6 @@ const { description, title } = Astro.props;
       import collapse from '@alpinejs/collapse';
 
       Alpine.plugin(collapse);
-
-      Alpine.store('theme', {
-        init() {
-          this.isDark = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-              return localStorage.getItem('theme') === 'dark';
-            }
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              return true;
-            }
-            return false;
-          })();
-        },
-
-        isDark: false,
-
-        toggle() {
-          this.isDark = !this.isDark;
-          localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
-        },
-      });
 
       window.Alpine = Alpine;
       Alpine.start();

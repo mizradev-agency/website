@@ -3,12 +3,34 @@ import { getSingleton } from '../../lib/keystatic';
 const { services } = await getSingleton('home');
 const icons = ['↗', '⌘', '◫', '◎'];
 ---
+
 <section id="servicios" class="section shell">
-  <div class="section-intro"><span class="eyebrow">LO QUE HAGO</span><h2>{services.heading}</h2><p>Diseño y desarrollo conectados, con una solución pensada para lo que tu negocio necesita.</p></div>
-  <div class="service-list">{services.items.map((item, i) => (
-    <a class="service-row" href={`/contact?servicio=${encodeURIComponent(item.name)}`}>
-      <div class="service-top"><span class="service-number">{item.step}</span><span class="service-icon" aria-hidden="true">{icons[i]}</span></div>
-      <h3>{item.name}</h3><p>{item.description}</p><span class="service-bottom">Hablemos de tu idea <span aria-hidden="true">↗</span></span>
-    </a>
-  ))}</div>
+  <div class="section-intro">
+    <span class="eyebrow">LO QUE HAGO</span><h2>{services.heading}</h2><p>
+      Diseño y desarrollo conectados, con una solución pensada para lo que tu negocio necesita.
+    </p>
+  </div>
+  <div class="service-list">
+    {
+      services.items.map((item, i) => (
+        <a class="service-row" href={'/agendar-llamada'}>
+          <div class="service-top">
+            <>
+              <span class="service-number">{item.step}</span>
+              <span class="service-icon" aria-hidden="true">
+                {icons[i]}
+              </span>
+            </>
+          </div>
+          <p>{item.description}</p>
+          <>
+            <h3>{item.name}</h3>
+            <span class="service-bottom">
+              Hablemos de tu idea <span aria-hidden="true">↗</span>
+            </span>
+          </>
+        </a>
+      ))
+    }
+  </div>
 </section>

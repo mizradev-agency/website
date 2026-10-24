@@ -1,0 +1,63 @@
+<!-- Set the theme before paint, including when storage is unavailable. -->
+<script is:inline>
+  (() => {
+    let saved;
+    try {
+      saved = localStorage.getItem('theme');
+    } catch {}
+    const dark =
+      saved === 'dark' || (saved !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  })();
+</script>
+<script>
+  const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+  function savedTheme() {
+    try {
+      return localStorage.getItem('theme');
+    } catch {
+      return null;
+    }
+  }
+  function applyTheme(dark: boolean, root = document.documentElement) {
+    root.classList.toggle('dark', dark);
+    root.dataset.theme = dark ? 'dark' : 'light';
+  }
+  function syncControls() {
+    const dark = document.documentElement.classList.contains('dark');
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+      button.title = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+    });
+  }
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest('[data-theme-toggle]')) return;
+    const dark = !document.documentElement.classList.contains('dark');
+    applyTheme(dark);
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {}
+    syncControls();
+  });
+  document.addEventListener('astro:before-swap', (event) => {
+    applyTheme(
+      document.documentElement.classList.contains('dark'),
+      event.newDocument.documentElement
+    );
+  });
+  document.addEventListener('astro:page-load', syncControls);
+  systemTheme.addEventListener('change', (event) => {
+    if (!['light', 'dark'].includes(savedTheme() || '')) {
+      applyTheme(event.matches);
+      syncControls();
+    }
+  });
+  window.addEventListener('storage', (event) => {
+    if (event.key !== 'theme') return;
+    applyTheme(event.newValue === 'dark' || (event.newValue !== 'light' && systemTheme.matches));
+    syncControls();
+  });
+  syncControls();
+</script>

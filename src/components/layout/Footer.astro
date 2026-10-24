@@ -14,8 +14,13 @@ const site = await getSingleton('site');
           height="40"
           alt={site.brandName}
         /></a
-      ><p>{site.footerText}</p><a class="text-link" href="/contact"
-        >Construyamos algo bueno <span aria-hidden="true">↗</span></a>
+      ><p>{site.footerText}</p><div class="footer-actions">
+        <a class="text-link" href="/agendar-llamada"
+          >Agendar una llamada <span aria-hidden="true">↗</span></a
+        ><a class="text-link" href="/contact"
+          >Contactar por escrito <span aria-hidden="true">↗</span></a
+        >
+      </div>
     </div>
     <div class="footer-bottom">
       <span>© {new Date().getFullYear()} {site.brandName}. Hecho con intención.</span><nav

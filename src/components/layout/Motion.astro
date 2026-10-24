@@ -34,13 +34,22 @@
 
       const candidates = Array.from(
         main.querySelectorAll<HTMLElement>(
-          'h1, h2, h3, p, img, form, ul, blockquote, [data-reveal], .grid > *, a.rounded-full',
-        ),
-      ).filter((element) => !element.closest('[x-show], .sr-only, [data-scroll-image], [aria-hidden="true"], [data-case-gallery]' ));
+          'h1, h2, h3, p, img, form, ul, blockquote, [data-reveal], .grid > *, a.rounded-full'
+        )
+      ).filter(
+        (element) =>
+          !element.closest(
+            '[x-show], .sr-only, [data-scroll-image], [aria-hidden="true"], [data-case-gallery], [data-hero-title], [data-hero-photo]'
+          )
+      );
       const candidateSet = new Set(candidates);
       // Reveal each content block once, without stacking transforms on its children.
       const targets = candidates.filter((element) => {
-        for (let parent = element.parentElement; parent && parent !== main; parent = parent.parentElement) {
+        for (
+          let parent = element.parentElement;
+          parent && parent !== main;
+          parent = parent.parentElement
+        ) {
           if (candidateSet.has(parent)) return false;
         }
         return true;
@@ -52,24 +61,92 @@
       const animations = gsap.context(() => {});
       const compact = window.matchMedia('(max-width: 767px)').matches;
       animations.add(() => {
-        main.querySelectorAll<HTMLElement>('[data-scroll-image]').forEach((element) => {
-          gsap.fromTo(element, {
-            y: () => window.innerWidth < 768 ? 10 : 24,
-            rotation: () => window.innerWidth < 768 ? 0 : -0.65,
-            scale: 0.985,
-          }, {
-            y: () => window.innerWidth < 768 ? -10 : -24,
-            rotation: () => window.innerWidth < 768 ? 0 : 0.65,
-            scale: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: element.parentElement,
-              start: 'clamp(top bottom)',
-              end: 'clamp(bottom top)',
-              scrub: compact ? 0.45 : 0.8,
-              invalidateOnRefresh: true,
-            },
+        const heroTitle = main.querySelector('[data-hero-title]');
+        const heroPhoto = main.querySelector('[data-hero-photo]');
+        if (heroTitle && window.scrollY < 100) {
+          gsap.from(heroTitle, {
+            y: 36,
+            opacity: 0,
+            duration: 1.05,
+            ease: 'power3.out',
+            clearProps: 'all',
           });
+        }
+        if (heroPhoto) {
+          gsap.fromTo(
+            heroPhoto,
+            { scale: 1.08, yPercent: -2 },
+            {
+              scale: 1,
+              yPercent: 3,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.hero-showcase',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.8,
+              },
+            }
+          );
+        }
+        // A quiet magnetic response on precise pointers; touch keeps native behavior.
+        const hoverEvents = new AbortController();
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+          main
+            .querySelectorAll<HTMLElement>('.hero-action, .round-arrow, .showcase-label > a')
+            .forEach((button) => {
+              button.addEventListener(
+                'pointermove',
+                (event) => {
+                  const bounds = button.getBoundingClientRect();
+                  gsap.to(button, {
+                    x: (event.clientX - bounds.left - bounds.width / 2) * 0.14,
+                    y: (event.clientY - bounds.top - bounds.height / 2) * 0.18,
+                    duration: 0.35,
+                    overwrite: 'auto',
+                  });
+                },
+                { signal: hoverEvents.signal }
+              );
+              button.addEventListener(
+                'pointerleave',
+                () => {
+                  gsap.to(button, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power3.out',
+                    clearProps: 'transform',
+                    overwrite: 'auto',
+                  });
+                },
+                { signal: hoverEvents.signal }
+              );
+            });
+        }
+        animations.add(() => () => hoverEvents.abort());
+        main.querySelectorAll<HTMLElement>('[data-scroll-image]').forEach((element) => {
+          gsap.fromTo(
+            element,
+            {
+              y: () => (window.innerWidth < 768 ? 10 : 24),
+              rotation: () => (window.innerWidth < 768 ? 0 : -0.65),
+              scale: 0.985,
+            },
+            {
+              y: () => (window.innerWidth < 768 ? -10 : -24),
+              rotation: () => (window.innerWidth < 768 ? 0 : 0.65),
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: element.parentElement,
+                start: 'clamp(top bottom)',
+                end: 'clamp(bottom top)',
+                scrub: compact ? 0.45 : 0.8,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
         });
       });
       const reveal = (elements: HTMLElement[]) => {
@@ -89,8 +166,13 @@
         });
       };
       const observer = new IntersectionObserver(
-        (entries) => reveal(entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target as HTMLElement)),
-        { threshold: 0, rootMargin: '0px 0px -24px 0px' },
+        (entries) =>
+          reveal(
+            entries
+              .filter((entry) => entry.isIntersecting)
+              .map((entry) => entry.target as HTMLElement)
+          ),
+        { threshold: 0, rootMargin: '0px 0px -24px 0px' }
       );
 
       animations.add(() => {
