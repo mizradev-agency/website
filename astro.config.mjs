@@ -13,5 +13,7 @@ export default defineConfig({
   security: {
     checkOrigin: true,
   },
-  integrations: [tailwind(), compress(), react(), markdoc(), keystatic()],
+  // Vite already minifies CSS. astro-compress's older CSSO parser drops the
+  // media range queries emitted by Vite, removing the responsive breakpoints.
+  integrations: [tailwind(), compress({ CSS: false }), react(), markdoc(), keystatic()],
 });

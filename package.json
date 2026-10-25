@@ -7,7 +7,7 @@
     "start": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs dev",
     "serve": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
     "build": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs build",
-    "build:pages": "node ./node_modules/astro/bin/astro.mjs build --config astro.pages.config.mjs --mode pages",
+    "build:pages": "node ./node_modules/astro/bin/astro.mjs build --config astro.pages.config.mjs --mode pages && node scripts/check-responsive-css.mjs",
     "deploy:pages": "npm run build:pages && wrangler pages deploy dist --project-name mizradev-website",
     "preview": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs preview",
     "astro": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs",
