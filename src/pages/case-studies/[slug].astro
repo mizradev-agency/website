@@ -4,6 +4,10 @@ import PageIntro from '../../components/shared/PageIntro.astro';
 import ProjectVisual from '../../components/shared/ProjectVisual.astro';
 import Cta from '../../components/home/Cta.astro';
 import { assetUrl, getProjects, getSingleton } from '../../lib/keystatic';
+export async function getStaticPaths() {
+  return (await getProjects()).map((project) => ({ params: { slug: project.slug } }));
+}
+
 const projects = await getProjects();
 const project = projects.find((item) => item.slug === Astro.params.slug);
 if (!project) return Astro.redirect('/404');
@@ -55,6 +59,7 @@ const { brandName } = await getSingleton('site');
   </section>
   <div class="shell next-project">
     <a href={`/case-studies/${next.slug}`} class="text-link"
-      >{detail.nextLabel} {next.name} <span aria-hidden="true">↗</span></a>
+      >{detail.nextLabel} {next.name} <span aria-hidden="true">↗</span></a
+    >
   </div><Cta />
 </Layout>

@@ -137,3 +137,31 @@ Los proyectos y sus páginas se leen desde Keystatic en cada petición.
 Las fotografías actuales del hero, retrato, colaboración y banner de Sobre mí están
 seleccionadas en sus respectivos campos de imagen. Los textos de privacidad y de la
 página 404 conservan el contenido que estaba publicado y ahora también se editan en el CMS.
+
+### Cloudflare Pages (web pública)
+
+La web pública se compila como HTML estático para Cloudflare Pages. Keystatic y
+su autenticación siguen funcionando localmente mediante `pnpm dev`.
+
+- Repositorio: `mizradev-agency/website`, rama de producción `main`.
+- Node.js: `22` (definido en `.node-version`).
+- Gestor de paquetes: `pnpm@10.15.1` (definido en `package.json`).
+- Comando de compilación: `pnpm run build:pages`.
+- Directorio de salida: `dist`.
+- No se necesitan las variables `ADMIN_*` ni `SESSION_SECRET` en Cloudflare.
+
+`astro.pages.config.mjs` conserva la configuración local y genera únicamente
+las páginas públicas. Los casos de estudio se generan desde los proyectos del
+CMS. No se publican la API de Keystatic, el formulario de acceso ni el servidor
+Node. Las cabeceras de seguridad y redirecciones se generan en `dist/_headers`
+y `dist/_redirects`. `wrangler.jsonc` configura Pages, no Workers.
+
+Para publicar cambios de contenido: inicia `pnpm dev`, guarda tus cambios en
+Keystatic y sube los archivos modificados a GitHub. La integración de Pages
+reconstruye y publica la web tras cada push a `main`. En Pages, los cambios son
+visibles después de esa compilación; la lectura inmediata sin recompilar se
+mantiene en el servidor local.
+
+Para un despliegue manual, autentícate con `pnpm exec wrangler login` y ejecuta
+`pnpm run deploy:pages`. La creación inicial del proyecto debe hacerse con la
+integración Git de Cloudflare para conservar los despliegues automáticos.

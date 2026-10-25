@@ -20,7 +20,10 @@ function applySecurityHeaders(response: Response, pathname: string, url: URL) {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   if (url.protocol === 'https:') {
-    response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    response.headers.set(
+      'Strict-Transport-Security',
+      'max-age=63072000; includeSubDomains; preload'
+    );
   }
   if (isAdminPath(pathname) || pathname === '/login' || pathname === '/logout') {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
@@ -31,6 +34,9 @@ function applySecurityHeaders(response: Response, pathname: string, url: URL) {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Static builds have no cookies or request headers; Pages applies _headers.
+  if (context.isPrerendered) return next();
+
   const { pathname } = context.url;
   const session = getSession(context);
 
