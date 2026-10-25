@@ -6,6 +6,10 @@
   "vars": {
     "NODE_VERSION": "22",
     "PNPM_VERSION": "10.15.1",
-    "SKIP_DEPENDENCY_INSTALL": "1"
+    "SKIP_DEPENDENCY_INSTALL": "1",
+    "CONTACT_HOSTNAME": "mizradev-website.pages.dev",
+    "CONTACT_TO_EMAIL": "mizradev@gmail.com",
+    "CONTACT_FROM_EMAIL": "Mizradev <onboarding@resend.dev>",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFk6YMuSeQmvMa-S"
   }
 }

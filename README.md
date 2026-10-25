@@ -168,3 +168,37 @@ mantiene en el servidor local.
 Para un despliegue manual, autentícate con `pnpm exec wrangler login` y ejecuta
 `pnpm run deploy:pages`. La creación inicial del proyecto debe hacerse con la
 integración Git de Cloudflare para conservar los despliegues automáticos.
+
+### Formulario de contacto: Resend + Turnstile
+
+`/api/contact` se ejecuta como Pages Function; el resto del sitio sigue estático.
+El servidor valida origen, tamaño y campos, el campo trampa y el token de Turnstile
+(incluidos hostname y acción `contact`) antes de llamar a Resend. El destinatario
+se define en el servidor. El correo del visitante se usa como `reply_to`, nunca
+como remitente. No se envían respuestas automáticas al visitante.
+
+Configura en **Pages → mizradev-website → Configuración → Variables y secretos**, en
+producción, `RESEND_API_KEY` y `TURNSTILE_SECRET_KEY` como **secretos**.
+La clave de Resend solo necesita permiso **Sending access**. Configura también
+`TURNSTILE_SITE_KEY`, `CONTACT_HOSTNAME`, `CONTACT_TO_EMAIL` y `CONTACT_FROM_EMAIL`.
+Si se definen variables públicas en `wrangler.jsonc`, ese archivo es la fuente
+para esas variables. Nunca pongas secretos ahí ni en variables `PUBLIC_*`.
+Vuelve a desplegar después de configurar las variables.
+
+Registra en Turnstile el hostname público exacto, con widget Managed. No uses
+claves de prueba en producción. El handler comprueba `CONTACT_HOSTNAME` para
+impedir envíos desde despliegues de preview. Para un dominio propio, actualiza
+esa variable y la lista de hostnames permitidos en Turnstile.
+
+Resend Free permite 3.000 emails al mes y 100 al día. No habilites pagos por uso.
+`onboarding@resend.dev` solo permite enviar al correo propietario de la cuenta;
+para otro destinatario o un remitente de marca debes verificar un dominio en
+Resend y configurar sus registros DNS. El formulario conserva los datos si falla
+un envío y solo confirma éxito cuando Resend acepta el correo; aceptación no
+implica entrega en la bandeja de entrada.
+
+Para probar en local, copia `.dev.vars.example` a `.dev.vars` y usa
+`pnpm build:pages && pnpm exec wrangler pages dev dist`. Para Astro local, añade
+las mismas variables a `.env`. Las claves oficiales de prueba de Turnstile se
+reservan a localhost. Ejecuta `node --test tests/contact.test.mjs` para comprobar
+los rechazos de seguridad y el envío con proveedores simulados, sin enviar correos.

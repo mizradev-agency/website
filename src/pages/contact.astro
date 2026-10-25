@@ -30,10 +30,9 @@ const email = contact.info.email;
     <form
       class="contact-form"
       data-contact-form
-      data-email={email || ''}
-      data-email-subject={contact.form.emailSubject}
-      data-status-email={contact.form.statusEmail}
-      data-status-download={contact.form.statusDownload}
+      data-success={contact.form.successMessage}
+      method="post"
+      action="/api/contact"
     >
       <label for="name"
         >{contact.form.nameLabel}<input
@@ -72,49 +71,157 @@ const email = contact.info.email;
           required
           maxlength="5000"></textarea></label
       >
-      <p class="form-note">
-        {email ? contact.form.noteEmail : contact.form.noteDownload}
-      </p>
+      <div class="contact-trap" aria-hidden="true">
+        <label
+          >Deja este campo vacío<input name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <div data-turnstile></div>
+      <p class="form-note">{contact.form.note}</p>
+      <noscript>Activa JavaScript para enviar el formulario de forma segura.</noscript>
       <button class="button button-dark" type="submit"
-        >{email ? contact.form.submitLabel : contact.form.downloadLabel}<span aria-hidden="true"
-          >↗</span
-        ></button
+        >{contact.form.submitLabel}<span aria-hidden="true">↗</span></button
       ><p class="contact-status" role="status" aria-live="polite"></p>
     </form>
   </section>
 </Layout>
+<style>
+  .contact-layout > * {
+    min-width: 0;
+  }
+  .contact-schedule .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+  .contact-trap {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  [data-turnstile] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
+</style>
 <script>
-  function setupContact() {
+  type Turnstile = {
+    render: (element: HTMLElement, options: Record<string, unknown>) => string;
+    reset: (id: string) => void;
+    remove: (id: string) => void;
+  };
+  const api = () => (window as Window & { turnstile?: Turnstile }).turnstile;
+  let loading: Promise<void> | undefined;
+  function loadTurnstile() {
+    if (api()) return Promise.resolve();
+    if (!loading)
+      loading = new Promise<void>((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.onload = () => resolve();
+        script.onerror = () => {
+          script.remove();
+          loading = undefined;
+          reject(new Error('security'));
+        };
+        document.head.append(script);
+      });
+    return loading;
+  }
+  async function setupContact() {
     const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
     if (!form || form.dataset.ready) return;
     form.dataset.ready = 'true';
     const select = form.querySelector<HTMLSelectElement>('select');
-    const service = new URLSearchParams(window.location.search).get('servicio');
+    const service = new URLSearchParams(location.search).get('servicio');
     if (select && service && [...select.options].some((option) => option.value === service))
       select.value = service;
-    form.addEventListener('submit', (event) => {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const status = form.querySelector<HTMLElement>('[role="status"]')!;
+    const container = form.querySelector<HTMLElement>('[data-turnstile]')!;
+    let widget: string | undefined;
+    let token = '';
+    let sending = false;
+    button.disabled = true;
+    const cleanup = () => {
+      if (widget) api()?.remove(widget);
+    };
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!form.reportValidity()) return;
-      const data = new FormData(form);
-      const text = `Hola, soy ${data.get('name')}.\n\nMi correo: ${data.get('email')}\nServicio: ${
-        data.get('service') || 'Por definir'
-      }\n\nMi idea:\n${data.get('message')}`;
-      const status = form.querySelector<HTMLElement>('[role="status"]');
-      if (form.dataset.email) {
-        window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
-          form.dataset.emailSubject || ''
-        )}&body=${encodeURIComponent(text)}`;
-        if (status) status.textContent = form.dataset.statusEmail || '';
-      } else {
-        const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'mi-proyecto-mizradev.txt';
-        link.click();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        if (status) status.textContent = form.dataset.statusDownload || '';
+      if (sending || !form.reportValidity()) return;
+      if (!token) {
+        status.textContent = 'Completa la verificación de seguridad.';
+        return;
+      }
+      sending = true;
+      button.disabled = true;
+      status.textContent = 'Enviando tu mensaje…';
+      try {
+        const values = new FormData(form);
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: values.get('name'),
+            email: values.get('email'),
+            service: values.get('service'),
+            message: values.get('message'),
+            website: values.get('website'),
+            token,
+          }),
+          signal: AbortSignal.timeout(25000),
+        });
+        const result = await response.json();
+        if (response.ok) {
+          form.reset();
+          status.textContent = form.dataset.success || result.message;
+        } else
+          status.textContent =
+            result.message || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
+      } catch {
+        status.textContent =
+          'No se pudo confirmar el envío. Revisa tu conexión e inténtalo de nuevo.';
+      } finally {
+        sending = false;
+        token = '';
+        if (widget) api()?.reset(widget);
       }
     });
+    try {
+      const response = await fetch('/api/contact', { cache: 'no-store' });
+      if (!response.ok) throw new Error('config');
+      const { siteKey } = await response.json();
+      await loadTurnstile();
+      if (!form.isConnected) return;
+      widget = api()!.render(container, {
+        sitekey: siteKey,
+        action: 'contact',
+        language: 'es',
+        size: 'compact',
+        callback: (value: string) => {
+          token = value;
+          button.disabled = sending;
+        },
+        'expired-callback': () => {
+          token = '';
+          button.disabled = true;
+        },
+        'error-callback': () => {
+          token = '';
+          button.disabled = true;
+          status.textContent =
+            'No se pudo verificar tu conexión. Recarga la página para intentarlo de nuevo.';
+        },
+      });
+    } catch {
+      status.textContent = 'El formulario no está disponible ahora. Inténtalo más tarde.';
+    }
   }
   document.addEventListener('astro:page-load', setupContact);
   setupContact();
