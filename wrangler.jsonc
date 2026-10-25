@@ -2,5 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mizradev-website",
   "compatibility_date": "2026-10-24",
-  "pages_build_output_dir": "./dist"
+  "pages_build_output_dir": "./dist",
+  "vars": {
+    "NODE_VERSION": "22",
+    "PNPM_VERSION": "10.15.1",
+    "SKIP_DEPENDENCY_INSTALL": "1"
+  }
 }

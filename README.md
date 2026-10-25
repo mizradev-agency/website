@@ -146,7 +146,10 @@ su autenticación siguen funcionando localmente mediante `pnpm dev`.
 - Repositorio: `mizradev-agency/website`, rama de producción `main`.
 - Node.js: `22` (definido en `.node-version`).
 - Gestor de paquetes: `pnpm@10.15.1` (definido en `package.json`).
-- Comando de compilación: `pnpm run build:pages`.
+- Comando de compilación en Cloudflare: `pnpm install --frozen-lockfile && pnpm run build:pages`.
+- Variables de compilación: `SKIP_DEPENDENCY_INSTALL=1`, `PNPM_VERSION=10.15.1` y `NODE_VERSION=22`.
+  Estas variables se guardan en `wrangler.jsonc`. La instalación usa únicamente
+  `pnpm-lock.yaml`; se retiró el lockfile obsoleto de Bun.
 - Directorio de salida: `dist`.
 - No se necesitan las variables `ADMIN_*` ni `SESSION_SECRET` en Cloudflare.
 
