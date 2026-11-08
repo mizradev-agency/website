@@ -31,7 +31,7 @@ Stone is a free and open-source Astro theme specially designed for Business, Mar
 Navigate to your project folder and install its dependencies:
 
 ```
-npm install
+pnpm install
 ```
 
 ### Start
@@ -39,15 +39,15 @@ npm install
 Once the installation is done, you can now run your app:
 
 ```
-npm run dev
+pnpm dev
 ```
 
-This runs the app in development mode. Open http://localhost:3000 to view it in the browser.
+This runs the app in development mode. Open http://localhost:4321 to view it in the browser.
 
 ### Build
 
 ```
-npm run build
+pnpm build
 ```
 
 This builds the app for production to the `./dist/` folder.
@@ -85,31 +85,16 @@ Inside the project, you'll see the following folders and files:
 
 ## Deployment
 
-### Acceso a Keystatic
+### Acceso a Sanity
 
-El CMS está en `/keystatic` y requiere iniciar sesión en `/login`.
+El CMS está integrado en `/studio` y utiliza el proyecto `mizradev`
+(`qpnmosrg`) con el dataset público `production`. Sanity gestiona el acceso con
+la cuenta `mizradev@gmail.com`; la web no necesita credenciales administrativas
+en `.env`.
 
-1. Copia `.env.example` a `.env` si todavía no existe.
-2. Define `ADMIN_USERNAME`.
-3. Ejecuta `npm run auth:hash` e introduce tu contraseña. Copia el hash
-   resultante a `ADMIN_PASSWORD_HASH` conservando todos los signos `$`.
-4. Ejecuta `npm run auth:secrets` y copia `SESSION_SECRET` al `.env`.
-   `ADMIN_TOTP_SECRET` es opcional; configúralo solo si has añadido el secreto
-   a tu aplicación de autenticación.
-5. Reinicia `npm run dev` tras cambiar las credenciales.
-
-Los comandos de npm cargan `.env` con Node antes de iniciar Astro para evitar
-que la expansión de variables de Vite altere los signos `$` del hash scrypt.
-
-Para ejecutar la compilación localmente, usa `npm run build` y después
-`npm run serve` (Node.js 22.16 o superior). Este último comando carga `.env`
-al arrancar. En un servidor también puedes inyectar las mismas variables
-desde la configuración del alojamiento y ejecutar `node dist/server/entry.mjs`.
-Los secretos se consultan en el servidor y no se incluyen en el cliente.
-No publiques `.env` ni lo añadas al repositorio.
-
-Keystatic utiliza almacenamiento local: el proceso necesita acceso de escritura
-a `src/content` y `public/assets`, y esos archivos deben persistir en el servidor.
+Ejecuta `pnpm dev` y abre `http://localhost:4321/studio` para editar. Los cambios
+deben publicarse en Studio antes de que la web pública pueda leerlos. Para
+ejecutar la compilación localmente, usa `pnpm build` y después `pnpm serve`.
 
 Ready to build and deploy your site? Follow the [official documentation](https://docs.astro.build/en/guides/deploy/).
 
@@ -123,7 +108,7 @@ This project is licensed under the terms of the MIT license.
 
 ### Contenidos del sitio
 
-En Keystatic, **Páginas** contiene Inicio, Sobre mí, Servicios, Propuestas y preguntas,
+En Sanity Studio, los documentos únicos contienen Inicio, Sobre mí, Servicios, Propuestas y preguntas,
 Galería de proyectos, Contacto, Agendar llamada, Privacidad, Página 404 e Identidad visual.
 **Cabecera y pie** controla la marca, los logotipos, la navegación y los enlaces globales.
 Las secciones compartidas de servicios, proceso, presentación personal y llamada final
@@ -132,7 +117,7 @@ se editan en Inicio; las propuestas y preguntas se editan en Propuestas y pregun
 En **Proyectos** puedes editar Alma, Nexo, Ritmo y Raíz, crear nuevos proyectos,
 definir su orden y marcar cuáles aparecen en Inicio. Cada proyecto admite una imagen
 con texto alternativo; si no se carga una imagen, conserva su vista previa de diseño.
-Los proyectos y sus páginas se leen desde Keystatic en cada petición.
+Los proyectos y sus páginas se leen desde Sanity durante cada compilación.
 
 Las fotografías actuales del hero, retrato, colaboración y banner de Sobre mí están
 seleccionadas en sus respectivos campos de imagen. Los textos de privacidad y de la
@@ -140,8 +125,7 @@ página 404 conservan el contenido que estaba publicado y ahora también se edit
 
 ### Cloudflare Pages (web pública)
 
-La web pública se compila como HTML estático para Cloudflare Pages. Keystatic y
-su autenticación siguen funcionando localmente mediante `pnpm dev`.
+La web pública y Sanity Studio se compilan como archivos estáticos para Cloudflare Pages.
 
 - Repositorio: `mizradev-agency/website`, rama de producción `main`.
 - Node.js: `22` (definido en `.node-version`).
@@ -151,23 +135,83 @@ su autenticación siguen funcionando localmente mediante `pnpm dev`.
   Estas variables se guardan en `wrangler.jsonc`. La instalación usa únicamente
   `pnpm-lock.yaml`; se retiró el lockfile obsoleto de Bun.
 - Directorio de salida: `dist`.
-- No se necesitan las variables `ADMIN_*` ni `SESSION_SECRET` en Cloudflare.
+- No se necesitan secretos de Sanity para compilar porque el dataset es público.
 
-`astro.pages.config.mjs` conserva la configuración local y genera únicamente
-las páginas públicas. Los casos de estudio se generan desde los proyectos del
-CMS. No se publican la API de Keystatic, el formulario de acceso ni el servidor
-Node. Las cabeceras de seguridad y redirecciones se generan en `dist/_headers`
+`astro.pages.config.mjs` conserva la configuración local y genera las páginas
+públicas junto con `/studio`. Los casos de estudio se generan desde los proyectos
+de Sanity. Las cabeceras de seguridad y redirecciones se generan en `dist/_headers`
 y `dist/_redirects`. `wrangler.jsonc` configura Pages, no Workers.
 
-Para publicar cambios de contenido: inicia `pnpm dev`, guarda tus cambios en
-Keystatic y sube los archivos modificados a GitHub. La integración de Pages
-reconstruye y publica la web tras cada push a `main`. En Pages, los cambios son
-visibles después de esa compilación; la lectura inmediata sin recompilar se
-mantiene en el servidor local.
+Para publicar cambios de contenido: edita y publica en Sanity Studio, y después
+lanza una nueva compilación de Cloudflare Pages. Los cambios son visibles cuando
+termina ese despliegue estático.
 
 Para un despliegue manual, autentícate con `pnpm exec wrangler login` y ejecuta
 `pnpm run deploy:pages`. La creación inicial del proyecto debe hacerse con la
 integración Git de Cloudflare para conservar los despliegues automáticos.
+
+### Instalación en celulares
+
+`public/site.webmanifest` define el nombre Mizradev, el inicio en `/` y la
+apertura en modo `standalone`. Los iconos PNG de 192 y 512 px, el icono
+adaptable de Android y el `apple-touch-icon` de 180 px se derivan del archivo
+original `public/assets/logo-icon.png`. El layout público enlaza el manifiesto
+y los iconos y define el color de la aplicación.
+
+Tras desplegar por HTTPS, en Android usa **Instalar aplicación / Añadir a la
+pantalla de inicio**; en iPhone, **Compartir → Añadir a pantalla de inicio**.
+Si ya habías añadido el sitio con otro icono, elimina el acceso anterior y
+vuelve a añadirlo. Esta configuración permite instalar el sitio; requiere
+conexión para cargar las páginas y enviar el formulario.
+
+### Google Analytics 4
+
+El sitio mide GA4 desde el contenedor de Google Tag Manager. La integración
+directa de respaldo usa el ID `G-TWETP3RF3B` y está desactivada por defecto
+para evitar duplicar visitas. Para cambiar el ID de la integración directa,
+define `PUBLIC_GOOGLE_ANALYTICS_ID` con el ID de medición de tu flujo web de GA4.
+En local se configura en `.env`; en Cloudflare Pages, añádelo
+como variable de **compilación** y vuelve a compilar y desplegar. Es un
+identificador público, no un secreto. El HTML estático conserva el valor de la
+compilación: cambiarlo solo en tiempo de ejecución no actualiza la etiqueta.
+
+Cuando se habilita la integración directa, la etiqueta se incluye en el layout de las páginas públicas únicamente en
+producción y con un ID válido. No se carga con `pnpm dev`. Para desactivarla,
+define `PUBLIC_GOOGLE_ANALYTICS_ID` con un
+valor vacío y vuelve a compilar.
+
+En GA4, conserva habilitada **Medición mejorada → Vistas de página → Cambios
+de página basados en eventos del historial del navegador**. Esta opción mide
+la navegación con `ClientRouter`; el sitio inicializa la etiqueta una sola vez
+y no envía eventos `page_view` manuales que dupliquen esa medición.
+
+Después de publicar, comprueba la visita inicial y la navegación entre páginas
+con Google Tag Assistant y el informe **Tiempo real** de tu propiedad.
+Referencia: [instalación oficial de gtag.js](https://developers.google.com/tag-platform/gtagjs).
+
+### Google Tag Manager
+
+El contenedor predeterminado es `GTM-N88V9RRN`. Para cambiarlo, define
+`PUBLIC_GOOGLE_TAG_MANAGER_ID` en `.env` o como variable de compilación en
+Cloudflare Pages y vuelve a compilar y desplegar. Para desactivarlo, define un
+valor vacío y recompila. El contenedor
+web se carga únicamente en producción con un ID válido. El script está al
+inicio de `<head>` y el respaldo `noscript` al inicio de `<body>`, siguiendo la
+[instalación oficial](https://support.google.com/tagmanager/answer/14847097?hl=es).
+El contenedor se inicializa una sola vez durante la navegación de Astro y
+usa `dataLayer` para las etiquetas configuradas dentro de GTM.
+
+`PUBLIC_GOOGLE_ANALYTICS_VIA_GTM=true` es el valor predeterminado porque GA4 ya
+está configurado en ese contenedor. Si cambias a otro contenedor que todavía
+no incluye GA4, usa `PUBLIC_GOOGLE_ANALYTICS_VIA_GTM=false` para recuperar
+la integración directa y recompila.
+La desactivación solo se aplica cuando también existe un ID de GTM válido.
+
+Comprueba el contenedor con **Vista previa / Tag Assistant**. Astro usa
+`ClientRouter`: para etiquetas que deban ejecutarse en cada navegación, usa
+activadores de cambios del historial. Para GA4 conserva la medición mejorada
+del historial; evita añadir otro `page_view` para la misma navegación.
+Los cambios en las etiquetas del contenedor deben publicarse desde GTM.
 
 ### Formulario de contacto: Resend + Turnstile
 
@@ -189,6 +233,8 @@ Registra en Turnstile el hostname público exacto, con widget Managed. No uses
 claves de prueba en producción. El handler comprueba `CONTACT_HOSTNAME` para
 impedir envíos desde despliegues de preview. Para un dominio propio, actualiza
 esa variable y la lista de hostnames permitidos en Turnstile.
+El dominio de producción del formulario es `mizra.dev`, configurado en
+`wrangler.jsonc`; los subdominios de despliegue de Pages quedan excluidos.
 
 Resend Free permite 3.000 emails al mes y 100 al día. No habilites pagos por uso.
 `onboarding@resend.dev` solo permite enviar al correo propietario de la cuenta;

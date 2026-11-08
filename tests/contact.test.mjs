@@ -84,7 +84,7 @@ test('never sends emails for invalid, replayed, wrong-host or wrong-action token
 test('only sends to configured owner after verification, with safe reply-to and plain text', async () => {
   let calls = 0;
   const response = await contact(
-    request({ ...valid, to: 'attacker@example.com', message: '<script>alert(1)</script>' }),
+    request({ ...valid, plan: 'Sitio Web Profesional', to: 'attacker@example.com', message: '<script>alert(1)</script>' }),
     env,
     async (url, options) => {
       calls++;
@@ -94,6 +94,7 @@ test('only sends to configured owner after verification, with safe reply-to and 
       assert.deepEqual(body.to, ['owner@example.com']);
       assert.equal(body.reply_to, valid.email);
       assert.equal(body.html, undefined);
+      assert.ok(body.text.includes('Servicio: Web\nPlan: Sitio Web Profesional'));
       assert.match(options.headers['Idempotency-Key'], /^contact-[a-f0-9]{64}$/);
       return Response.json({ id: 'test-id' });
     }

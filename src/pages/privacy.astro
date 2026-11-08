@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSingleton } from '../lib/keystatic';
-import { Renderer } from '@astrojs/markdoc/components';
+import { toHTML } from '@portabletext/to-html';
+import { getSingleton } from '../lib/sanity';
 const privacy = await getSingleton('privacy');
+const content = toHTML(privacy.content ?? []);
 ---
 
 <Layout description={privacy.seoDescription} title={privacy.seoTitle}>
@@ -12,7 +13,7 @@ const privacy = await getSingleton('privacy');
       <p class="text-base">{privacy.updatedAt}</p>
     </div>
     <div class="privacy-content">
-      <Renderer stringifiedAst={JSON.stringify(privacy.content.node)} config={{}} />
+      <Fragment set:html={content} />
     </div>
   </div>
 </Layout>

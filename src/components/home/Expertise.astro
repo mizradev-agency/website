@@ -1,6 +1,8 @@
 ---
-import { getSingleton } from '../../lib/keystatic';
+import { getSingleton } from '../../lib/sanity';
+import Icon from '../shared/Icon.astro';
 const { expertise } = await getSingleton('home');
+const processIcons = ['message', 'palette', 'code', 'rocket'];
 ---
 
 <section id="proceso" class="section process-section">
@@ -12,7 +14,8 @@ const { expertise } = await getSingleton('home');
     </div><div class="process-grid">
       {
         expertise.items.map((item, i) => (
-          <div class="process-step">
+          <div class="process-step" data-reveal>
+            <span class="process-illustration" aria-hidden="true"><Icon name={processIcons[i] ?? 'workflow'} /></span>
             <h3>{item.name}</h3>
             <>
               <span class="process-number">0{i + 1}</span>
@@ -24,3 +27,7 @@ const { expertise } = await getSingleton('home');
     </div>
   </div>
 </section>
+
+<style>
+  .process-illustration { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 24px; border-radius: 16px; background: var(--paper); color: var(--forest); font-size: 28px; }
+</style>

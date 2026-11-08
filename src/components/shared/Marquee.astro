@@ -1,5 +1,6 @@
 ---
-import { getSingleton } from '../../lib/keystatic';
+import Icon from './Icon.astro';
+import { getSingleton } from '../../lib/sanity';
 const { specialties } = await getSingleton('home');
 ---
 
@@ -13,7 +14,7 @@ const { specialties } = await getSingleton('home');
             {specialties.map((item) => (
               <>
                 <span>{item}</span>
-                <i>✳</i>
+                <i><Icon name="asterisk" /></i>
               </>
             ))}
           </div>
@@ -22,8 +23,8 @@ const { specialties } = await getSingleton('home');
     </div>
   </div>
   <button class="marquee-toggle" type="button" aria-label="Pausar sintillo" aria-pressed="false"
-    ><span class="pause-icon" aria-hidden="true">Ⅱ</span><span class="play-icon" aria-hidden="true"
-      >▷</span
+    ><span class="pause-icon" aria-hidden="true"><Icon name="pause" /></span><span class="play-icon" aria-hidden="true"
+      ><Icon name="play" /></span
     ></button
   >
 </section>

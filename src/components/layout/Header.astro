@@ -1,6 +1,11 @@
 ---
-import { assetUrl, getSingleton } from '../../lib/keystatic';
+import Icon from '../shared/Icon.astro';
+import { assetUrl, getSingleton } from '../../lib/sanity';
 const site = await getSingleton('site');
+const navLinks = [
+  ...site.navLinks.filter((link) => link.href === '/about'),
+  ...site.navLinks.filter((link) => link.href !== '/about'),
+];
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const active = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
@@ -18,7 +23,7 @@ const active = (href: string) =>
     >
     <nav class="desktop-nav" aria-label="Navegación principal">
       {
-        site.navLinks.map((link) => (
+        navLinks.map((link) => (
           <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>
             {link.name}
           </a>
@@ -26,7 +31,7 @@ const active = (href: string) =>
       }
     </nav>
     <a href={site.headerCta.href} class="button button-dark nav-cta"
-      >{site.headerCta.text} <span aria-hidden="true">↗</span></a
+      >{site.headerCta.text} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
     >
     <button
       class="theme-toggle"
@@ -73,14 +78,14 @@ const active = (href: string) =>
   <nav id="mobile-menu" class="mobile-nav" hidden aria-label="Navegación móvil">
     <div class="shell">
       {
-        site.navLinks.map((link, i) => (
+        navLinks.map((link, i) => (
           <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>
             <>
               <span>
                 <small>0{i + 1}</small>
                 {link.name}
               </span>
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true"><Icon name="arrow-up-right" /></span>
             </>
           </a>
         ))

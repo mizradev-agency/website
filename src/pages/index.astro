@@ -7,10 +7,10 @@ import Services from '../components/home/Services.astro';
 import Projects from '../components/home/Projects.astro';
 import Engagement from '../components/home/Engagement.astro';
 import Layout from '../layouts/Layout.astro';
-import { getSingleton } from '../lib/keystatic';
+import { getSingleton } from '../lib/sanity';
 const home = await getSingleton('home');
 ---
 
 <Layout description={home.seoDescription} title={home.seoTitle}>
-  <Hero /><About /><Projects /><Services /><Expertise /><Engagement /><Cta />
+  <Hero /><About /><Projects /><Services /><Expertise /><Engagement showPlans={false} /><Cta />
 </Layout>

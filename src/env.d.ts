@@ -1,10 +1,10 @@
 /// <reference types="astro/client" />
+/// <reference types="@sanity/astro/module" />
 
 interface ImportMetaEnv {
-  readonly ADMIN_USERNAME?: string;
-  readonly ADMIN_PASSWORD_HASH?: string;
-  readonly SESSION_SECRET?: string;
-  readonly ADMIN_TOTP_SECRET?: string;
+  readonly PUBLIC_GOOGLE_ANALYTICS_ID?: string;
+  readonly PUBLIC_GOOGLE_TAG_MANAGER_ID?: string;
+  readonly PUBLIC_GOOGLE_ANALYTICS_VIA_GTM?: string;
 }
 
 interface ImportMeta {

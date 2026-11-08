@@ -10,9 +10,7 @@
     "build:pages": "node ./node_modules/astro/bin/astro.mjs build --config astro.pages.config.mjs --mode pages && node scripts/check-responsive-css.mjs",
     "deploy:pages": "npm run build:pages && wrangler pages deploy dist --project-name mizradev-website",
     "preview": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs preview",
-    "astro": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs",
-    "auth:hash": "node scripts/hash-password.mjs",
-    "auth:secrets": "node scripts/generate-secrets.mjs"
+    "astro": "node --env-file-if-exists=.env ./node_modules/astro/bin/astro.mjs"
   },
   "packageManager": "pnpm@10.15.1",
   "pnpm": {
@@ -23,13 +21,14 @@
   },
   "dependencies": {
     "@alpinejs/collapse": "3.12.3",
-    "@astrojs/markdoc": "^2.0.9",
     "@astrojs/node": "^11.1.6",
     "@astrojs/react": "^6.0.5",
     "@astrojs/tailwind": "4.0.0",
     "@fontsource/inter": "5.0.8",
-    "@keystatic/astro": "^6.0.0",
-    "@keystatic/core": "^0.6.9",
+    "@portabletext/to-html": "^6.0.0",
+    "@sanity/astro": "^3.6.0",
+    "@sanity/client": "^8.15.0",
+    "@sanity/image-url": "^2.1.1",
     "@types/alpinejs": "3.7.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -41,9 +40,14 @@
     "prettier": "3.0.2",
     "prettier-plugin-astro": "0.12.0",
     "prettier-plugin-tailwindcss": "0.5.3",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "tailwindcss": "3.3.3"
+    "react": "^19.3.1",
+    "react-compiler-runtime": "^1.0.0",
+    "react-dom": "^19.3.1",
+    "react-is": "^19.3.1",
+    "sanity": "^6.22.0",
+    "styled-components": "^6.6.0",
+    "tailwindcss": "3.3.3",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "wrangler": "^4.152.0"

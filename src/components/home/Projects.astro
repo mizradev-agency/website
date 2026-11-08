@@ -1,6 +1,7 @@
 ---
+import Icon from '../shared/Icon.astro';
 import ProjectCard from '../shared/ProjectCard.astro';
-import { getProjects, getSingleton } from '../../lib/keystatic';
+import { getProjects, getSingleton } from '../../lib/sanity';
 const projects = await getProjects();
 const { projects: content } = await getSingleton('home');
 ---
@@ -19,7 +20,7 @@ const { projects: content } = await getSingleton('home');
     </div>
     <div class="projects-bottom">
       <span>{content.footerText}</span><a href={content.cta.href} class="text-link"
-        >{content.cta.text} <span aria-hidden="true">↗</span></a>
+        >{content.cta.text} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>
     </div>
   </div>
 </section>

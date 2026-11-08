@@ -1,5 +1,8 @@
 ---
-import { getSingleton } from '../../lib/keystatic';
+import Icon from '../shared/Icon.astro';
+import { getSingleton } from '../../lib/sanity';
+import { serviceHref } from '../../lib/services';
+import { serviceVisual, serviceColors } from '../../lib/service-visuals';
 const { services } = await getSingleton('home');
 ---
 
@@ -12,12 +15,12 @@ const { services } = await getSingleton('home');
   <div class="service-list">
     {
       services.items.map((item) => (
-        <a class="service-row" href={services.cta.href}>
+        <a class="service-row" href={serviceHref(item.step)} style={serviceColors(item.step)} data-reveal>
           <div class="service-top">
             <>
               <span class="service-number">{item.step}</span>
               <span class="service-icon" aria-hidden="true">
-                {item.icon}
+                <Icon name={serviceVisual(item.step).icon} />
               </span>
             </>
           </div>
@@ -25,7 +28,7 @@ const { services } = await getSingleton('home');
           <>
             <h3>{item.name}</h3>
             <span class="service-bottom">
-              {services.cta.text} <span aria-hidden="true">↗</span>
+              Explorar servicio <span aria-hidden="true"><Icon name="arrow-up-right" /></span>
             </span>
           </>
         </a>
@@ -33,3 +36,14 @@ const { services } = await getSingleton('home');
     }
   </div>
 </section>
+
+<style>
+  .service-row { --service-tint: var(--service-tint-base); }
+  .service-row .service-top { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .service-row .service-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: var(--service-tint); color: var(--service-accent); font-size: 25px; }
+  .service-list .service-row:hover { background: var(--service-tint); }
+  .service-row:hover .service-bottom > span { background: var(--service-accent); color: #fff; border-color: transparent; }
+  :global(.dark) .service-row { --service-tint: color-mix(in srgb, var(--service-accent) 18%, var(--paper)); }
+  :global(.dark) .service-row .service-icon { color: var(--service-light); }
+  @media (max-width: 600px) { .service-row .service-icon { width: 32px; height: 32px; font-size: 20px; border-radius: 9px; } }
+</style>

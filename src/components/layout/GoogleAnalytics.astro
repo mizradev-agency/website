@@ -1,0 +1,35 @@
+---
+import { analyticsViaTagManager } from '../../lib/analytics';
+
+// Public build-time configuration: never include admin credentials here.
+const measurementId = (
+  import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID ?? 'G-TWETP3RF3B'
+).trim();
+const enabled =
+  import.meta.env.PROD &&
+  !analyticsViaTagManager &&
+  /^G-[A-Z0-9]+$/.test(measurementId ?? '');
+---
+
+{
+  enabled && (
+    <>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+      />
+      <script is:inline define:vars={{ measurementId }}>
+        // Astro preserves this window across ClientRouter navigations.
+        // GA4 enhanced measurement handles history changes automatically.
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+        if (!window.__mizradevAnalyticsInitialized) {
+          window.__mizradevAnalyticsInitialized = true;
+          window.gtag('js', new Date());
+          window.gtag('config', measurementId);
+        }
+      </script>
+    </>
+  )
+}

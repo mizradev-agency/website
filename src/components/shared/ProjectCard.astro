@@ -1,13 +1,14 @@
 ---
+import Icon from './Icon.astro';
 import ProjectVisual from './ProjectVisual.astro';
-import { assetUrl, type Project } from '../../lib/keystatic';
+import { assetUrl, type Project } from '../../lib/sanity';
 interface Props {
   project: Project;
 }
 const { project } = Astro.props;
 ---
 
-<article class="project-card" data-category={project.category}>
+<article class="project-card" data-category={project.category} data-reveal>
   <a class="case-link" href={`/case-studies/${project.slug}`}>
     {
       project.image ? (
@@ -27,7 +28,7 @@ const { project } = Astro.props;
         <span class="eyebrow">CONCEPTO / {project.discipline}</span><h3>
           {project.name} — {project.title}
         </h3>
-      </div><span aria-hidden="true">↗</span>
+      </div><span aria-hidden="true"><Icon name="arrow-up-right" /></span>
     </div>
     <p>{project.summary}</p>
   </a>

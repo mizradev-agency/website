@@ -1,5 +1,6 @@
 ---
-import { getSingleton } from '../../lib/keystatic';
+import Icon from '../shared/Icon.astro';
+import { getSingleton } from '../../lib/sanity';
 const { cta } = await getSingleton('home');
 ---
 
@@ -8,11 +9,11 @@ const { cta } = await getSingleton('home');
     <div>
       <span class="eyebrow">{cta.eyebrow}</span><h2>{cta.heading}</h2><p>{cta.text}</p><a
         class="button button-mint"
-        href={cta.button.href}>{cta.button.text}<span aria-hidden="true">↗</span></a
+        href={cta.button.href}>{cta.button.text}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
       >
       <a class="text-link cta-contact" href={cta.secondaryCta.href}
-        >{cta.secondaryCta.text} <span aria-hidden="true">↗</span></a
+        >{cta.secondaryCta.text} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
       >
-    </div><span class="cta-asterisk" aria-hidden="true">✳</span>
+    </div><span class="cta-asterisk" aria-hidden="true"><Icon name="asterisk" /></span>
   </div>
 </section>

@@ -1,21 +1,22 @@
 ---
+import Icon from '../shared/Icon.astro';
 import Marquee from '../shared/Marquee.astro';
-import { assetUrl, getSingleton } from '../../lib/keystatic';
+import { assetUrl, getSingleton } from '../../lib/sanity';
 const { hero } = await getSingleton('home');
 ---
 
 <section class="hero shell">
   <div class="hero-eyebrow">
-    <span class="eyebrow"><i class="status-dot"></i> {hero.eyebrow}</span>
+    <span class="eyebrow">{hero.eyebrow}</span>
   </div>
   <h1 data-hero-title>{hero.heading}</h1>
   <p class="hero-intro">{hero.text}</p>
   <div class="hero-actions-pair">
     <a class="button button-dark hero-action" href={hero.cta.href}
-      >{hero.cta.text}<span aria-hidden="true">↗</span></a
+      >{hero.cta.text}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
     >
     <a class="text-link" href={hero.secondaryCta.href}
-      >{hero.secondaryCta.text} <span aria-hidden="true">↗</span></a
+      >{hero.secondaryCta.text} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
     >
   </div>
   <div class="hero-showcase">
@@ -31,12 +32,12 @@ const { hero } = await getSingleton('home');
     </div>
     <span class="photo-index">{hero.photoIndex}</span>
     <div class="showcase-label">
-      <span class="status-dot"></span><div>
+      <div>
         <strong>{hero.showcaseHeading}</strong><span>{hero.showcaseText}</span>
-      </div><a href={hero.showcaseLink.href} aria-label={hero.showcaseLink.text}>↗</a>
+      </div><a href={hero.showcaseLink.href} aria-label={hero.showcaseLink.text}><Icon name="arrow-up-right" /></a>
     </div>
     <a class="showcase-corner" href={hero.cornerLink.href}
-      >{hero.cornerLink.text} <span aria-hidden="true">↓</span></a
+      >{hero.cornerLink.text} <span aria-hidden="true"><Icon name="arrow-down" /></span></a
     >
   </div>
   <div class="hero-caption">

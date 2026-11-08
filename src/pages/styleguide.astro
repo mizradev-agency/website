@@ -1,6 +1,7 @@
 ---
+import Icon from '../components/shared/Icon.astro';
 import Layout from '../layouts/Layout.astro';
-import { getSingleton } from '../lib/keystatic';
+import { getSingleton } from '../lib/sanity';
 const content = await getSingleton('styleguide');
 const { colors } = content;
 ---
@@ -28,7 +29,7 @@ const { colors } = content;
       </h2><p>{content.typography.text}</p><a
         class="button button-dark"
         href={content.typography.cta.href}
-        >{content.typography.cta.text} <span aria-hidden="true">↗</span></a>
+        >{content.typography.cta.text} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>
     </div>
   </section>
 </Layout>

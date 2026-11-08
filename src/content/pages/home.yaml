@@ -30,36 +30,44 @@ services:
   items:
     - step: '01'
       name: Sitios & páginas web
-      description: Tu negocio, bien presentado. Sitios corporativos, landing pages y tiendas con una experiencia clara, rápida y fácil de administrar.
+      description: Tu negocio, bien presentado. Sitios corporativos y landing pages con una experiencia clara, rápida y fácil de administrar.
       icon: ↗
       deliverables:
         - Sitios corporativos y landing pages
-        - Tiendas online y catálogos
+        - Diseño personalizado para tu marca
         - Contenido administrable y diseño responsive
     - step: '02'
       name: Sistemas a medida
-      description: Menos tareas repetitivas, más posibilidades. Plataformas, paneles e integraciones diseñados alrededor de cómo funciona tu negocio.
+      description: Plataformas y herramientas que crecen contigo. Desarrollo, integraciones y mejoras técnicas alrededor de cómo funciona tu negocio.
       icon: ⌘
       deliverables:
-        - Paneles de gestión y herramientas internas
-        - Automatización de tareas
-        - Integraciones entre tus servicios
+        - Plataformas web y paneles de gestión
+        - Integraciones y automatización de tareas
+        - Auditoría, migración y evolución técnica
     - step: '03'
       name: Aplicaciones móviles
-      description: Tu idea, al alcance de la mano. Apps intuitivas que conectan tu servicio con las personas, donde sea que estén.
+      description: De la primera idea a su lanzamiento. Apps para iOS y Android con diseño cuidado, conexiones con tus sistemas y una experiencia fluida.
       icon: ◫
       deliverables:
-        - Diseño de interfaces móviles
-        - Flujos claros para tus usuarios
-        - Desarrollo según las necesidades del producto
+        - Diseño UX/UI y prototipos móviles
+        - Desarrollo para iOS y Android e integraciones
+        - Pruebas, publicación y mantenimiento
     - step: '04'
       name: Estrategia web & SEO
-      description: Una buena web también necesita ser encontrada. Estructura, contenido y optimización técnica con una dirección clara para crecer.
+      description: Convierte las búsquedas en oportunidades. Auditoría, contenidos y mejoras técnicas para conectar tu web con las personas que necesitan tu negocio.
       icon: ◎
       deliverables:
-        - Revisión de estructura y contenidos
-        - Rendimiento y SEO técnico
-        - Un plan de mejoras con prioridades claras
+        - Auditoría y estrategia de palabras clave
+        - SEO técnico, contenidos y visibilidad local
+        - Seguimiento de tráfico y consultas
+    - step: '05'
+      name: Tiendas online
+      description: Tu catálogo, listo para vender. Tiendas con una compra sencilla, pagos y envíos conectados y herramientas para gestionar el día a día.
+      icon: cart
+      deliverables:
+        - Catálogo, carrito y proceso de compra
+        - Integraciones de pagos, envíos y gestión
+        - Migración y mejoras de tiendas existentes
   eyebrow: LO QUE HAGO
   text: Diseño y desarrollo conectados, con una solución pensada para lo que tu negocio necesita.
   cta:

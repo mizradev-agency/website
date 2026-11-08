@@ -1,5 +1,6 @@
 ---
-import { assetUrl, getSingleton } from '../../lib/keystatic';
+import Icon from '../shared/Icon.astro';
+import { assetUrl, getSingleton } from '../../lib/sanity';
 const { about } = await getSingleton('home');
 ---
 
@@ -13,7 +14,7 @@ const { about } = await getSingleton('home');
       loading="lazy"
     /><figcaption>
       <span>{about.photoEyebrow}</span><strong>{about.photoHeading}</strong><span aria-hidden="true"
-        >✳</span
+        ><Icon name="asterisk" /></span
       >
     </figcaption>
   </figure>
@@ -21,9 +22,9 @@ const { about } = await getSingleton('home');
     <span class="eyebrow">{about.eyebrow}</span><h2>{about.heading}</h2><p>{about.text}</p><div
       class="about-values"
     >
-      {about.values.map((value) => <span>↗ {value}</span>)}
+      {about.values.map((value) => <span><Icon name="arrow-up-right" /> {value}</span>)}
     </div><a class="button button-dark" href={about.cta.href}
-      >{about.cta.text}<span aria-hidden="true">↗</span></a
+      >{about.cta.text}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a
     >
   </div>
 </section>
@@ -43,7 +44,7 @@ const { about } = await getSingleton('home');
     </p><a
       href={about.collaborationLink.href}
       class="round-arrow"
-      aria-label={about.collaborationLink.text}>↗</a
+      aria-label={about.collaborationLink.text}><Icon name="arrow-up-right" /></a
     >
   </div>
 </section>

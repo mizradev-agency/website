@@ -82,13 +82,7 @@ a {
   font-weight: 500;
 }
 .eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  flex-shrink: 0;
-  background: var(--forest);
-  border-radius: 50%;
+  content: none;
 }
 .status-dot {
   background: var(--forest);
@@ -1019,19 +1013,19 @@ h2 {
   font-size: 12px;
 }
 
-/* Tonal forest-green surfaces; photos and project previews retain their colors. */
+/* Neutral dark surfaces let each page's accent keep its own identity. */
 :root.dark {
   color-scheme: dark;
-  --ink: #edf8f1;
-  --paper: rgb(0, 41, 31);
-  --muted: #aecabe;
-  --line: #285443;
+  --ink: #f1f5fa;
+  --paper: #10151c;
+  --muted: #b5c0cf;
+  --line: #354151;
   --forest: rgb(123, 239, 178);
-  --surface: #0b382c;
-  --surface-deep: #002219;
-  --surface-raised: #124735;
-  --lavender: #164c39;
-  --peach: #1c513e;
+  --surface: #18212c;
+  --surface-deep: #0b1017;
+  --surface-raised: #233040;
+  --lavender: #2b2540;
+  --peach: #382820;
 }
 .dark body {
   background: var(--paper);

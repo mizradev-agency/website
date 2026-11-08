@@ -62,7 +62,8 @@ export async function contact(request, env, fetcher = fetch) {
     typeof data[key] === 'string' && data[key].trim().length <= max ? data[key].trim() : '';
   const name = field('name', 120),
     email = field('email', 200),
-    service = field('service', 200);
+    service = field('service', 200),
+    plan = field('plan', 200);
   const message = field('message', 5000),
     token = field('token', 2048);
   if (
@@ -105,7 +106,7 @@ export async function contact(request, env, fetcher = fetch) {
         subject: 'Nuevo proyecto — Mizradev',
         text: `Nombre: ${name}\nCorreo: ${email}\nServicio: ${
           service || 'Por definir'
-        }\n\n${message}`,
+        }\nPlan: ${plan || 'Por definir'}\n\n${message}`,
       }),
       signal: AbortSignal.timeout(10000),
     });

@@ -4,44 +4,12 @@ import PageIntro from '../components/shared/PageIntro.astro';
 import Services from '../components/home/Services.astro';
 import Expertise from '../components/home/Expertise.astro';
 import Cta from '../components/home/Cta.astro';
-import { getSingleton } from '../lib/keystatic';
-const { services } = await getSingleton('home');
+import { getSingleton } from '../lib/sanity';
 const content = await getSingleton('services');
 ---
 
 <Layout title={content.seoTitle} description={content.seoDescription}>
   <PageIntro {...content.intro} />
   <Services />
-  <section class="shell section service-deliverables">
-    <div class="section-intro">
-      <span class="eyebrow">{content.deliverables.eyebrow}</span><h2>
-        {content.deliverables.heading}
-      </h2><p>
-        {content.deliverables.text}
-      </p>
-    </div>
-    {
-      services.items.map((service) => (
-        <article class="deliverable-row">
-          <h3>{service.name}</h3>
-          <ul>
-            {service.deliverables.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-          <>
-            <span class="eyebrow">{service.step}</span>
-            <a
-              href={services.cta.href}
-              class="round-arrow"
-              aria-label={`Consultar sobre ${service.name}`}
-            >
-              ↗
-            </a>
-          </>
-        </article>
-      ))
-    }
-  </section>
   <Expertise /><Cta />
 </Layout>
